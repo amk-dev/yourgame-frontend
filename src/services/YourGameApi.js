@@ -1,8 +1,14 @@
 /* eslint-disable */
 import axios from 'axios'
 
+let baseURL = 'http://localhost:3000'
+
+if (process.env.context == 'staging') {
+	baseURL = 'https://staging.api.yourgame.live'
+}
+
 const api = axios.create({
-	baseURL: 'http://localhost:3000',
+	baseURL,
 })
 
 export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
