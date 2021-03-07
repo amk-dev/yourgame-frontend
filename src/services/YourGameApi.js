@@ -3,7 +3,7 @@ import axios from 'axios'
 
 let baseURL = 'http://localhost:3000'
 
-if (process.env.context == 'staging') {
+if (process.env.CONTEXT == 'branch-deploy') {
 	baseURL = 'https://staging.api.yourgame.live'
 }
 
