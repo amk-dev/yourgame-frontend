@@ -1,15 +1,8 @@
 /* eslint-disable */
 import axios from 'axios'
 
-let baseURL = 'http://localhost:3000'
-
-if (process.env.CONTEXT == 'branch-deploy') {
-	console.log('this is a branch deploy')
-	baseURL = 'https://staging.api.yourgame.live'
-}
-
 const api = axios.create({
-	baseURL,
+	baseURL: process.env.YOURGAME_API_URL,
 })
 
 export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
