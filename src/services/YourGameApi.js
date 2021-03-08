@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-	baseURL: process.env.YOURGAME_API_URL,
+	baseURL: process.env.VUE_APP_YOURGAME_API_URL,
 })
 
 console.log(process.env)
