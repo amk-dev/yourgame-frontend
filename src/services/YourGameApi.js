@@ -5,6 +5,8 @@ const api = axios.create({
 	baseURL: process.env.YOURGAME_API_URL,
 })
 
+console.log(process.env)
+
 export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
 	try {
 		let result = await api.post(
