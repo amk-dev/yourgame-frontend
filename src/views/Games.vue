@@ -15,6 +15,7 @@
 								:contests="contests"
 								:title="contestsTitle"
 								:clickable="true"
+								:type="this.creator ? 'creator' : 'user'"
 							></contest-list>
 						</div>
 					</div>
@@ -30,7 +31,7 @@
 
 	export default {
 		name: 'Games',
-		props: ['contests', 'contestsTitle'],
+		props: ['contests', 'contestsTitle', 'creator'],
 		components: {
 			Navbar,
 			ContestList,

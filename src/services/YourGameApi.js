@@ -1,11 +1,15 @@
 /* eslint-disable */
 import axios from 'axios'
 
-const api = axios.create({
-	baseURL: process.env.VUE_APP_YOURGAME_API_URL,
-})
+let baseURL = 'http://localhost:3000/'
 
-console.log(process.env)
+if (process.env.VUE_APP_YOURGAME_API_URL) {
+	baseUrl = process.env.VUE_APP_YOURGAME_API_URL
+}
+
+const api = axios.create({
+	baseURL: baseURL,
+})
 
 export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
 	try {
