@@ -14,6 +14,7 @@
 							<contest-list
 								title="Contests By You"
 								type="creator"
+								:contests="[]"
 							></contest-list>
 						</div>
 					</div>

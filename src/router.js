@@ -81,6 +81,29 @@ let router = new Router({
 			},
 		},
 		{
+			path: '/creator/dashboard',
+			props: true,
+			component: Games,
+			beforeEnter(to, from, next) {
+				store
+					.dispatch('populateAllContests')
+					.then((allContests) => {
+						to.params.contests = allContests
+						to.params.contestsTitle = 'All Games'
+						to.params.creator = true
+						next()
+					})
+					.catch((error) => {
+						// eslint-disable-next-line
+						console.log(error)
+						next('/something-went-wrong')
+					})
+			},
+			meta: {
+				private: true,
+			},
+		},
+		{
 			path: '/yourmoney',
 			name: 'yourmoney',
 			component: YourMoney,
@@ -109,14 +132,6 @@ let router = new Router({
 			path: '/contest/:contestId/play',
 			name: 'Play',
 			component: Play,
-			meta: {
-				private: true,
-			},
-		},
-		{
-			path: '/creator/dashboard',
-			name: 'CreatorDashboard',
-			component: CreatorDashboard,
 			meta: {
 				private: true,
 			},

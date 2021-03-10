@@ -1,3 +1,8 @@
+[context.staging]
+    [[headers]]
+        for = "/*"
+        [headers.values]
+            X-Robots-Tag = "noindex"
 [context.staging.environment]
     VUE_APP_CONTEXT = 'staging'
     VUE_APP_YOURGAME_API_URL = 'https://staging.api.yourgame.live'
