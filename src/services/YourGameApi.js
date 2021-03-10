@@ -4,7 +4,7 @@ import axios from 'axios'
 let baseURL = 'http://localhost:3000/'
 
 if (process.env.VUE_APP_YOURGAME_API_URL) {
-	baseUrl = process.env.VUE_APP_YOURGAME_API_URL
+	baseURL = process.env.VUE_APP_YOURGAME_API_URL
 }
 
 const api = axios.create({
