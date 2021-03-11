@@ -105,7 +105,7 @@
 	}
 
 	@media screen and (max-width: 768px) {
-		.name {
+		.dropdown .name {
 			display: none;
 		}
 	}
