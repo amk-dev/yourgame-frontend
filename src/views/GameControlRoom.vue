@@ -150,7 +150,7 @@
 							class="is-block"
 							v-if="isQuestionsOver && isRemainingTimeZero"
 							>End Game</primary-button
-					>
+						>
 					</div>
 				</div>
 			</div>
@@ -315,7 +315,7 @@
 		background: #37c5ab;
 	}
 	.option.wrong-answer {
-		background: #ccc;
+		background: #ccc !important;
 	}
 	.option {
 		transition: background 0.3s ease-in-out;

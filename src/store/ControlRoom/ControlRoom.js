@@ -84,10 +84,10 @@ export default {
 		},
 		SET_CORRECT_ANSWER(state, correctAnswer) {
 			state.isRightAnswer = {
-				a: correctAnswer == 'option_a',
-				b: correctAnswer == 'option_b',
-				c: correctAnswer == 'option_c',
-				d: correctAnswer == 'option_d',
+				a: correctAnswer == 'a',
+				b: correctAnswer == 'b',
+				c: correctAnswer == 'c',
+				d: correctAnswer == 'd',
 			}
 		},
 		RESET_CORRECT_ANSWER(state) {
