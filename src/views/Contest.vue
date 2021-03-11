@@ -11,9 +11,9 @@
 				<div class="column is-7">
 					<div class="contest-wrapper mt-6 mb-4">
 						<game-card
-							v-if="contest"
+							v-if="activeContest"
 							type="contest-header"
-							:contest="contest"
+							:contest="activeContest"
 						></game-card>
 					</div>
 				</div>
@@ -21,7 +21,9 @@
 
 			<div class="columns is-gapless is-centered is-marginless">
 				<div class="column is-7">
-					<success-message v-if="contest.isJoined"></success-message>
+					<success-message
+						v-if="activeContest.isJoined"
+					></success-message>
 				</div>
 			</div>
 
@@ -59,6 +61,7 @@
 	import SuccessMessage from '../components/Contests/SuccessMessage.vue'
 
 	import store from '../store/index.js'
+	import { mapGetters } from 'vuex'
 
 	export default {
 		name: 'Contest',
@@ -75,7 +78,9 @@
 		beforeRouteUpdate(to, from, next) {
 			getContestDetails(to, next)
 		},
-		props: ['contest', 'leaderboard'],
+		computed: {
+			...mapGetters(['activeContest', 'leaderboard']),
+		},
 	}
 
 	function getContestDetails(to, next) {
@@ -84,10 +89,7 @@
 		let singleContest = store.dispatch('getSingleContest', contestId)
 		let leaderboard = store.dispatch('getContestLeaderboard', contestId)
 
-		Promise.all([singleContest, leaderboard]).then((results) => {
-			// eslint-disable-next-line
-			to.params.contest = results[0]
-			to.params.leaderboard = results[1]
+		Promise.all([singleContest, leaderboard]).then(() => {
 			next()
 		})
 	}
