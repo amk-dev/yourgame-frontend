@@ -12,7 +12,7 @@ export default {
 		isStartingContestFeedback: null,
 		currentView: 'start',
 		remainingTime: 15,
-		questionCount: 4,
+		questionCount: 10,
 		isRightAnswer: {
 			a: true,
 			b: true,
@@ -99,7 +99,7 @@ export default {
 			}
 		},
 		RESET_REMAINING_TIME(state) {
-			state.remainingTime = 30
+			state.remainingTime = 15
 		},
 		SET_IS_GETTING_NEXT_QUESTION(state, isGettingNextQuestion) {
 			state.isGettingNextQuestion = isGettingNextQuestion
