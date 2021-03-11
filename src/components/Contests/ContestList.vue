@@ -23,21 +23,20 @@
 			>
 				<game-card
 					class="mb-6"
-					v-for="contest in contests"
 					:key="contest._id"
 					:contest="contest"
 				></game-card>
 			</router-link>
 		</div>
 
-		<div class="section-body" v-if="!clickable">
+		<!-- <div class="section-body" v-if="!clickable">
 			<game-card
 				class="mb-6"
 				v-for="contest in contests"
 				:key="contest._id"
 				:contest="contest"
 			></game-card>
-		</div>
+		</div> -->
 	</div>
 </template>
 
