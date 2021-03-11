@@ -137,6 +137,14 @@ export async function getJoinedContests(firebaseIdToken) {
 	})
 }
 
+export async function getCreatedContests(firebaseIdToken) {
+	return api.get('/contest/createdcontests', {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}
+
 export async function answerQuestion(firebaseIdToken, contestId, answer) {
 	return api.post(
 		`/contest/${contestId}/answer`,
