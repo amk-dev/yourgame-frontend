@@ -22,7 +22,7 @@
 				:to="`/contest/${contest._id}`"
 			>
 				<game-card
-					class="mb-6"
+					class="mb-4"
 					:key="contest._id"
 					:contest="contest"
 				></game-card>
