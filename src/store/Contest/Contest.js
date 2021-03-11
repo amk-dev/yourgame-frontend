@@ -2,6 +2,7 @@ import {
 	createContest,
 	getAllContests,
 	getJoinedContests,
+	getCreatedContests,
 	getContestById,
 	joinContest,
 	getLeaderboard,
@@ -15,6 +16,7 @@ export default {
 		isGettingContest: false,
 		isJoiningContest: false,
 		isPopulatingAllContests: false,
+		isPopulatingCreatedContests: false,
 		isGettingLeaderboard: false,
 		// feedbacks
 		createNewContestFeedback: null,
@@ -25,6 +27,7 @@ export default {
 		createContestError: null,
 		allContests: null,
 		joinedContests: null,
+		createdContests: null,
 		myContests: null,
 		activeContest: null,
 		activeContestError: false,
@@ -34,6 +37,9 @@ export default {
 		// getters for loading booleans
 		isCreatingContest(state) {
 			return state.isCreatingContest
+		},
+		isPopulatingCreatedContests(state) {
+			return state.isPopulatingCreatedContests
 		},
 		isJoiningContest(state) {
 			return state.isJoiningContest
@@ -51,6 +57,9 @@ export default {
 		// getters for state items
 		allContests(state) {
 			return state.allContests
+		},
+		createdContests(state) {
+			return state.createdContests
 		},
 		activeContest(state) {
 			return state.activeContest
@@ -79,6 +88,9 @@ export default {
 		SET_IS_POPULATING_JOINED_CONTESTS(state, isPopulatingJoinedContests) {
 			state.isPopulatingJoinedContests = isPopulatingJoinedContests
 		},
+		SET_IS_POPULATING_CREATED_CONTESTS(state, isPopulatingCreatedContests) {
+			state.isPopulatingCreatedContests = isPopulatingCreatedContests
+		},
 		SET_IS_GETTING_LEADERBOARD(state, isGettingLeaderboard) {
 			state.isGettingLeaderboard = isGettingLeaderboard
 		},
@@ -100,6 +112,9 @@ export default {
 		},
 		SET_JOINED_CONTESTS(state, joinedContests) {
 			state.joinedContest = joinedContests
+		},
+		SET_CREATED_CONTESTS(state, createdContests) {
+			state.createdContests = createdContests
 		},
 		SET_ACTIVE_CONTEST(state, contest) {
 			state.activeContest = contest
@@ -203,6 +218,24 @@ export default {
 					})
 				} finally {
 					commit('SET_IS_POPULATING_JOINED_CONTESTS', false)
+				}
+			})
+		},
+		populateCreatedContests({ commit }) {
+			return new Promise(async (resolve, reject) => {
+				commit('SET_IS_POPULATING_CREATED_CONTESTS', true)
+				try {
+					let idToken = await getIdToken()
+					let result = await getCreatedContests(idToken)
+					resolve(result.data)
+					commit('SET_CREATED_CONTESTS', result.data)
+				} catch (error) {
+					reject({
+						error: true,
+						message: 'something-went-wrong',
+					})
+				} finally {
+					commit('SET_IS_POPULATING_CREATED_CONTESTS', false)
 				}
 			})
 		},
