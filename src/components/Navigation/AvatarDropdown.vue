@@ -21,21 +21,27 @@
 
 		<div class="dropdown-menu mt-2" id="dropdown-menu" role="menu">
 			<div class="dropdown-content yg-dropdown-content">
-				<router-link to="/games/all">
-					<div class="yg-dropdown-link mt-2">
-						All Games
-					</div>
-				</router-link>
-				<router-link to="/games/joined">
-					<div class="yg-dropdown-link mt-2">
-						Joined Games
-					</div>
-				</router-link>
-				<router-link to="/yourmoney">
-					<div class="yg-dropdown-link mt-2">
-						Your Money
-					</div>
-				</router-link>
+				<div
+					class="yg-dropdown-link mt-2"
+					@click="hideDropdownAndGoToRoute('/games/all')"
+				>
+					All Games
+				</div>
+
+				<div
+					class="yg-dropdown-link mt-2"
+					@click="hideDropdownAndGoToRoute('/games/joined')"
+				>
+					Joined Games
+				</div>
+
+				<div
+					class="yg-dropdown-link mt-2"
+					@click="hideDropdownAndGoToRoute('/yourmoney')"
+				>
+					Your Money
+				</div>
+
 				<div class="yg-dropdown-link mt-2" @click="signout">
 					Signout
 				</div>
@@ -52,6 +58,21 @@
 		name: 'AvatarDropdown',
 		props: ['isActive', 'displayName', 'profilePicture'],
 		methods: {
+			hideDropdownAndGoToRoute(route) {
+				this.toggleDropdown()
+				this.$router.push(route).catch((error) => {
+					if (
+						isNavigationFailure(
+							error,
+							NavigationFailureType.duplicated
+						)
+					) {
+						// eslint-disable-next-line
+						console.log('Navigation Duplicated')
+					}
+				})
+			},
+
 			toggleDropdown() {
 				this.$emit('toggleDropdown')
 			},
@@ -64,6 +85,7 @@
 							NavigationFailureType.duplicated
 						)
 					) {
+						// eslint-disable-next-line
 						console.log('Navigation Duplicated')
 					}
 				})
