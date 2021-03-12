@@ -23,6 +23,9 @@
 				<div class="column is-7">
 					<success-message
 						v-if="activeContest.isJoined"
+						:play-link="`/contest/${$route.params.contestId}/play`"
+						:contest-date="contestDate"
+						:contest-time="contestTime"
 					></success-message>
 				</div>
 			</div>
@@ -80,6 +83,49 @@
 		},
 		computed: {
 			...mapGetters(['activeContest', 'leaderboard']),
+			contestTime() {
+				let date = new Date(this.activeContest.startTime)
+				let hours = date.getHours()
+				let minutes = date.getMinutes()
+
+				let hourString = ''
+				let ap = 'AM'
+
+				if (hours >= 12) {
+					ap = 'PM'
+				}
+
+				if (minutes < 10) {
+					minutes = `0${minutes}`
+				}
+
+				hours = hours % 12 || 12
+
+				if (hours < 10) {
+					hours = `0${hours}`
+				}
+
+				hourString = `${hours}:${minutes} ${ap}`
+
+				return hourString
+			},
+			contestDate() {
+				let date = new Date(this.activeContest.startTime)
+
+				let day = date.getDate()
+				let month = date.getMonth()
+				let year = date.getFullYear()
+
+				if (day < 10) {
+					day = `0${day}`
+				}
+
+				if (month < 10) {
+					month = `0${month}`
+				}
+
+				return `${day}-${month}-${year}`
+			},
 		},
 	}
 
