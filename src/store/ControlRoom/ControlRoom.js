@@ -42,7 +42,7 @@ export default {
 			return state.remainingTime
 		},
 		currentIcon(state) {
-			return `./img/fontawesome/solid.svg#${state.currentQuestion.name}`
+			return `/img/fontawesome/solid.svg#${state.currentQuestion.name}`
 		},
 		isRightAnswer(state) {
 			return state.isRightAnswer
