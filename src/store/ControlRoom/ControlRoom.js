@@ -158,7 +158,9 @@ export default {
 
 				if (remainingTime == 0) {
 					clearInterval(interval)
-					dispatch('closeCurrentQuestion', contestId)
+					setTimeout(function() {
+						dispatch('closeCurrentQuestion', contestId)
+					}, 3000)
 				}
 			}, 1000)
 		},
