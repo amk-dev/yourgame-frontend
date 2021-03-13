@@ -24,7 +24,11 @@
 								:key="feature.id"
 							></yg-feature>
 						</div>
-
+						<feedback-box
+							v-if="signInError"
+							class="mt-4"
+							:feedback="signInError"
+						></feedback-box>
 						<google-sign-in-button
 							:class="{ 'is-loading': isSigningIn }"
 							:disabled="isSigningIn"
@@ -41,6 +45,7 @@
 	import Navbar from '../components/Navigation/NavBar.vue'
 	import YgFeature from '../components/Generic/Button/YgFeature.vue'
 	import GoogleSignInButton from '../components/Generic/Button/GoogleSignInButton.vue'
+	import FeedbackBox from '../components/Generic/FeedbackBox/FeedbackBox.vue'
 	import { mapGetters } from 'vuex'
 
 	export default {
@@ -49,6 +54,7 @@
 			YgFeature,
 			Navbar,
 			GoogleSignInButton,
+			FeedbackBox,
 		},
 		data: () => {
 			return {
@@ -81,7 +87,7 @@
 			}
 		},
 		computed: {
-			...mapGetters(['isSigningIn']),
+			...mapGetters(['isSigningIn', 'signInError']),
 		},
 		methods: {
 			signinWithGoogle() {

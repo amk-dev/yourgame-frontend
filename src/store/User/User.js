@@ -58,15 +58,26 @@ export default {
 			auth.signInWithRedirect(provider)
 		},
 		checkForSignInErrors({ commit }) {
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve) => {
 				auth.getRedirectResult()
 					.then((result) => {
 						console.log(result)
 						resolve(result)
 					})
 					.catch((error) => {
-						commit('SET_SIGNIN_ERROR', error)
-						reject(error)
+						if (error.code == 'auth/web-storage-unsupported') {
+							commit('SET_SIGNIN_ERROR', {
+								message:
+									'Current Browser Is Not Supported. Please Make Sure Cookies Are Enabled',
+								type: 'error',
+							})
+						} else {
+							console.log(error)
+							commit('SET_SIGNIN_ERROR', {
+								message: 'Signin Failed. Something Went Wrong',
+								type: 'error',
+							})
+						}
 					})
 			})
 		},
