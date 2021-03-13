@@ -11,9 +11,9 @@
 				<div class="column is-7">
 					<div class="contest-wrapper mt-6 mb-4">
 						<game-card
-							v-if="contest"
+							v-if="activeContest"
 							type="contest-header"
-							:contest="contest"
+							:contest="activeContest"
 						></game-card>
 					</div>
 				</div>
@@ -21,7 +21,12 @@
 
 			<div class="columns is-gapless is-centered is-marginless">
 				<div class="column is-7">
-					<success-message v-if="contest.isJoined"></success-message>
+					<success-message
+						v-if="activeContest.isJoined"
+						:play-link="`/contest/${$route.params.contestId}/play`"
+						:contest-date="contestDate"
+						:contest-time="contestTime"
+					></success-message>
 				</div>
 			</div>
 
@@ -59,6 +64,7 @@
 	import SuccessMessage from '../components/Contests/SuccessMessage.vue'
 
 	import store from '../store/index.js'
+	import { mapGetters } from 'vuex'
 
 	export default {
 		name: 'Contest',
@@ -75,7 +81,52 @@
 		beforeRouteUpdate(to, from, next) {
 			getContestDetails(to, next)
 		},
-		props: ['contest', 'leaderboard'],
+		computed: {
+			...mapGetters(['activeContest', 'leaderboard']),
+			contestTime() {
+				let date = new Date(this.activeContest.startTime)
+				let hours = date.getHours()
+				let minutes = date.getMinutes()
+
+				let hourString = ''
+				let ap = 'AM'
+
+				if (hours >= 12) {
+					ap = 'PM'
+				}
+
+				if (minutes < 10) {
+					minutes = `0${minutes}`
+				}
+
+				hours = hours % 12 || 12
+
+				if (hours < 10) {
+					hours = `0${hours}`
+				}
+
+				hourString = `${hours}:${minutes} ${ap}`
+
+				return hourString
+			},
+			contestDate() {
+				let date = new Date(this.activeContest.startTime)
+
+				let day = date.getDate()
+				let month = date.getMonth()
+				let year = date.getFullYear()
+
+				if (day < 10) {
+					day = `0${day}`
+				}
+
+				if (month < 10) {
+					month = `0${month}`
+				}
+
+				return `${day}-${month}-${year}`
+			},
+		},
 	}
 
 	function getContestDetails(to, next) {
@@ -84,10 +135,7 @@
 		let singleContest = store.dispatch('getSingleContest', contestId)
 		let leaderboard = store.dispatch('getContestLeaderboard', contestId)
 
-		Promise.all([singleContest, leaderboard]).then((results) => {
-			// eslint-disable-next-line
-			to.params.contest = results[0]
-			to.params.leaderboard = results[1]
+		Promise.all([singleContest, leaderboard]).then(() => {
 			next()
 		})
 	}

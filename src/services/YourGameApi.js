@@ -1,8 +1,14 @@
 /* eslint-disable */
 import axios from 'axios'
 
+let baseURL = 'http://localhost:3000/'
+
+if (process.env.VUE_APP_YOURGAME_API_URL) {
+	baseURL = process.env.VUE_APP_YOURGAME_API_URL
+}
+
 const api = axios.create({
-	baseURL: 'http://localhost:3000',
+	baseURL: baseURL,
 })
 
 export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
@@ -125,6 +131,14 @@ export async function getLeaderboard(contestId) {
 
 export async function getJoinedContests(firebaseIdToken) {
 	return api.get('/contest/joinedcontests', {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}
+
+export async function getCreatedContests(firebaseIdToken) {
+	return api.get('/contest/createdcontests', {
 		headers: {
 			Authorization: `Bearer ${firebaseIdToken}`,
 		},

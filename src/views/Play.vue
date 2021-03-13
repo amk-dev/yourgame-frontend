@@ -1,28 +1,35 @@
 <template>
-	<div class="columns is-centered">
-		<div class="column is-10">
-			<nav-bar class="play-navbar" />
-
-			<div class="columns is-centered">
-				<div class="column is-12">
-					<div class="player-wrapper" ref="playerWrapper">
-						<Player></Player>
-					</div>
-				</div>
-			</div>
+	<div
+		class="columns is-centered is-gapless is-fullheight-not-mobile is-marginless"
+	>
+		<div class="column is-9">
+			<figure class="image is-16by9 is-fullheight-not-mobile">
+				<iframe
+					v-if="contestYoutubeLiveUrl"
+					class="has-ratio"
+					:src="contestYoutubeLiveUrl"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				></iframe>
+			</figure>
+		</div>
+		<div class="column is-3">
+			<answer-buttons
+				class="player-video-answer-buttons"
+				v-on="$listeners"
+			></answer-buttons>
 		</div>
 	</div>
 </template>
 
 <script>
-	import NavBar from './../components/Navigation/NavBar.vue'
-	import Player from './../components/Play/Player.vue'
+	import AnswerButtons from './../components/Play/AnswerButtons.vue'
+
+	import { mapGetters } from 'vuex'
 
 	export default {
 		name: 'Play',
 		components: {
-			NavBar,
-			Player,
+			AnswerButtons,
 		},
 		data: function() {
 			return {
@@ -30,18 +37,14 @@
 				optionsVisible: false,
 			}
 		},
-		methods: {
-			goFullScreen() {
-				if (this.isFullscreen) {
-					document.exitFullscreen()
-					this.isFullscreen = false
-				} else {
-					this.$refs.playerWrapper.requestFullscreen({
-						navigationUI: 'hide',
-					})
-					this.isFullscreen = true
-				}
-			},
+		computed: {
+			...mapGetters(['contestYoutubeLiveUrl']),
+		},
+		mounted() {
+			this.$store.dispatch(
+				'getSingleContest',
+				this.$route.params.contestId
+			)
 		},
 	}
 </script>
@@ -49,6 +52,12 @@
 <style>
 	body {
 		background: #f2f6fc;
+	}
+
+	@media screen and (min-width: 768px) {
+		.is-fullheight-not-mobile {
+			min-height: 100vh;
+		}
 	}
 
 	@media screen and (max-width: 768px) {

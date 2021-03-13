@@ -7,7 +7,7 @@ import Games from './views/Games.vue'
 import YourMoney from './views/YourMoney'
 import GameControlRoom from './views/GameControlRoom.vue'
 import Play from './views/Play.vue'
-import CreatorDashboard from './views/CreatorDashboard.vue'
+
 import PrivacyPolicy from './views/PrivacyPolicy.vue'
 import TermsOfService from './views/TermsOfService.vue'
 import ErrorPage from './views/ErrorPage.vue'
@@ -46,6 +46,7 @@ let router = new Router({
 					.then((allContests) => {
 						to.params.contests = allContests
 						to.params.contestsTitle = 'All Games'
+						to.params.context = 'all-games'
 						next()
 					})
 					.catch((error) => {
@@ -68,12 +69,62 @@ let router = new Router({
 					.then((joinedContests) => {
 						to.params.contests = joinedContests
 						to.params.contestsTitle = 'Joined Contests'
+						to.params.context = 'joined-games'
 						next()
 					})
 					.catch((error) => {
 						// TODO:: Redirect To A 404 Page
 						// eslint-disable-next-line
 						console.log(error)
+					})
+			},
+			meta: {
+				private: true,
+			},
+		},
+		{
+			path: '/games/created',
+			props: true,
+			component: Games,
+			beforeEnter(to, from, next) {
+				store
+					.dispatch('populateCreatedContests')
+					.then((createdContests) => {
+						to.params.contests = createdContests
+						to.params.contestsTitle = 'Created Contests'
+						to.params.creator = true
+						to.params.context = 'created-games'
+						next()
+					})
+					.catch((error) => {
+						// eslint-disable-next-line
+						console.log(error)
+						next('/something-went-wrong')
+					})
+			},
+			meta: {
+				private: true,
+			},
+		},
+		{
+			path: '/games/new',
+			props: true,
+			component: Games,
+			beforeEnter(to, from, next) {
+				store
+					.dispatch('populateCreatedContests')
+					.then((createdContests) => {
+						to.params.contests = createdContests
+						to.params.contestsTitle = 'Created Contests'
+						to.params.creator = true
+						to.params.context = 'created-games'
+						to.params.showNewContestForm = true
+						next()
+					})
+					.catch((error) => {
+						// eslint-disable-next-line
+						console.log(error)
+						next('/something-went-wrong')
 					})
 			},
 			meta: {
@@ -109,14 +160,6 @@ let router = new Router({
 			path: '/contest/:contestId/play',
 			name: 'Play',
 			component: Play,
-			meta: {
-				private: true,
-			},
-		},
-		{
-			path: '/creator/dashboard',
-			name: 'CreatorDashboard',
-			component: CreatorDashboard,
 			meta: {
 				private: true,
 			},
