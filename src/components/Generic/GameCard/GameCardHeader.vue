@@ -43,7 +43,7 @@
 <style>
 	.game-card-header {
 		justify-content: space-between;
-		align-items: center;
+		align-items: baseline;
 	}
 	.game-card-header h3 {
 		font-size: 18px;
@@ -73,6 +73,11 @@
 
 	.game-status .tag {
 		margin-left: 0 !important;
+		margin-top: 12px;
+	}
+
+	.game-name {
+		line-height: 100%;
 	}
 
 	@media screen and (max-width: 786px) {
