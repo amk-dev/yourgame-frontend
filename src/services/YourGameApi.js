@@ -156,3 +156,11 @@ export async function answerQuestion(firebaseIdToken, contestId, answer) {
 		}
 	)
 }
+
+export async function endContest(firebaseIdToken, contestId) {
+	return api.post(`/contest/${contestId}/end`, null, {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}

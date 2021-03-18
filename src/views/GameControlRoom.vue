@@ -149,8 +149,16 @@
 						<primary-button
 							class="is-block"
 							v-if="isQuestionsOver && isRemainingTimeZero"
+							@click.native="endContest"
+							:disabled="isEndingContest"
 							>End Game</primary-button
 						>
+
+						<feedback-box
+							class="mt-4"
+							v-if="isEndingContestFeedback"
+							:feedback="isEndingContestFeedback"
+						></feedback-box>
 					</div>
 				</div>
 			</div>
@@ -198,6 +206,9 @@
 					)
 				}
 			},
+			endContest() {
+				this.$store.dispatch('endContest', this.$route.params.contestId)
+			},
 		},
 		computed: {
 			...mapGetters([
@@ -213,6 +224,8 @@
 				'isRightAnswer',
 				'isGettingNextQuestion',
 				'isQuestionsOver',
+				'isEndingContestFeedback',
+				'isEndingContest',
 			]),
 		},
 	}

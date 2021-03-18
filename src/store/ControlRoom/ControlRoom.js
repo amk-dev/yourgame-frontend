@@ -1,6 +1,7 @@
 import { getIdToken } from '../../services/FirebaseAuth.js'
 import {
 	closeCurrentQuestion,
+	endContest,
 	getNextQuestion,
 	startContest,
 } from '../../services/YourGameApi.js'
@@ -21,8 +22,16 @@ export default {
 		},
 		contestEnded: false,
 		isGettingNextQuestion: false,
+		isEndingContest: false,
+		isEndingContestFeedback: null,
 	},
 	getters: {
+		isEndingContest(state) {
+			return state.isEndingContest
+		},
+		isEndingContestFeedback(state) {
+			return state.isEndingContestFeedback
+		},
 		isStartingContest(state) {
 			return state.isStartingContest
 		},
@@ -103,6 +112,12 @@ export default {
 		},
 		SET_IS_GETTING_NEXT_QUESTION(state, isGettingNextQuestion) {
 			state.isGettingNextQuestion = isGettingNextQuestion
+		},
+		SET_IS_ENDING_CONTEST(state, isEndingContest) {
+			state.isEndingContest = isEndingContest
+		},
+		SET_IS_ENDING_CONTEST_FEEDBACK(state, isEndingContestFeedback) {
+			state.isEndingContestFeedback = isEndingContestFeedback
 		},
 	},
 	actions: {
@@ -196,6 +211,32 @@ export default {
 					reject(error)
 				} finally {
 					commit('SET_IS_GETTING_NEXT_QUESTION', false)
+				}
+			})
+		},
+		endContest({ commit }, contestId) {
+			return new Promise(async function(resolve, reject) {
+				commit('SET_IS_ENDING_CONTEST', true)
+
+				try {
+					const idToken = await getIdToken()
+					const result = await endContest(idToken, contestId)
+
+					commit('SET_IS_ENDING_CONTEST_FEEDBACK', {
+						type: 'success',
+						message: 'Contest Ended',
+					})
+
+					resolve(result.data)
+				} catch (error) {
+					commit('SET_IS_ENDING_CONTEST_FEEDBACK', {
+						type: 'error',
+						message: 'Something Went Wrong',
+					})
+
+					reject(error)
+				} finally {
+					commit('SET_IS_ENDING_CONTEST', false)
 				}
 			})
 		},
