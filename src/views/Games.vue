@@ -87,6 +87,21 @@
 					this.contests.length == 0 && this.context == 'created-games'
 				)
 			},
+			pastGames() {
+				return this.contests.filter(
+					(contest) => contest.status == 'ended'
+				)
+			},
+			liveGames() {
+				return this.contests.filter(
+					(contest) => contest.status == 'live'
+				)
+			},
+			upcomingGames() {
+				return this.contests.filter(
+					(contest) => contest.status == 'upcoming'
+				)
+			},
 		},
 	}
 </script>

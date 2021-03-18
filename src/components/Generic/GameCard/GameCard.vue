@@ -7,6 +7,7 @@
 			<game-card-header
 				:host-picture="contest.host_picture"
 				:host-name="contest.host_display_name"
+				:status="contest.status"
 			></game-card-header>
 
 			<div
