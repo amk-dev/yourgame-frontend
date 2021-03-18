@@ -282,7 +282,6 @@
 		align-items: center;
 		background: #f8f8f8;
 		color: rgba(0, 0, 0, 0.25);
-		font-size: 56px;
 		font-weight: 700;
 	}
 	.start-view-game-name h1 {
