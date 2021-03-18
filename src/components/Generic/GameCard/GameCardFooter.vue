@@ -55,6 +55,7 @@
 			'isJoined',
 			'isCreator',
 			'contestId',
+			'contestStatus',
 		],
 		components: {
 			TotalWinningsAndEntry,
@@ -87,7 +88,20 @@
 				return !this.isContestHeader && !this.isJoined
 			},
 			showJoinButton() {
-				return this.isContestHeader && !this.isCreator && !this.isJoined
+				return (
+					this.isContestHeader &&
+					!this.isCreator &&
+					!this.isJoined &&
+					this.contestStatus == 'upcoming'
+				)
+			},
+			showWatchButton() {
+				return (
+					this.isContestHeader &&
+					!this.isCreator &&
+					!this.isJoined &&
+					this.contestStatus == 'live'
+				)
 			},
 			contestLink() {
 				return `/contest/${this.contestId}`

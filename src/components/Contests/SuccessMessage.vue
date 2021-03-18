@@ -1,19 +1,31 @@
 <template>
-	<div class="success-message notification is-light is-success mb-4">
+	<div
+		class="success-message notification is-light mb-4"
+		:class="{
+			'is-success': isSuccess,
+			'is-info': isInfo,
+			'is-danger': isDanger,
+		}"
+	>
 		<div class="text">
-			You have successfully joined the contest. Visit Contest Playground
-			At
-			<strong>{{ contestTime }}</strong> on
-			<strong>{{ contestDate }}</strong> to play.
+			<slot></slot>
 		</div>
 
-		<router-link :to="playLink">
+		<router-link v-if="!isExternal" :to="buttonLink">
 			<div class="playground-button">
-				<primary-button class="is-fullwidth"
-					>Go To Playground</primary-button
-				>
+				<primary-button class="is-fullwidth">{{
+					buttonTitle
+				}}</primary-button>
 			</div>
 		</router-link>
+
+		<a v-if="isExternal" :href="buttonLink">
+			<div class="playground-button">
+				<primary-button class="is-fullwidth">{{
+					buttonTitle
+				}}</primary-button>
+			</div>
+		</a>
 	</div>
 </template>
 
@@ -22,9 +34,23 @@
 
 	export default {
 		name: 'SuccessMessage',
-		props: ['playLink', 'contestTime', 'contestDate'],
+		props: ['buttonLink', 'buttonTitle', 'type'],
 		components: {
 			PrimaryButton,
+		},
+		computed: {
+			isInfo() {
+				return this.type == 'info'
+			},
+			isSuccess() {
+				return this.type == 'success'
+			},
+			isDanger() {
+				return this.type == 'danger'
+			},
+			isExternal() {
+				return this.buttonLink.indexOf('https://') == 0
+			},
 		},
 	}
 </script>
