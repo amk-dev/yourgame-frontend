@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
 import { auth, authProviders } from '@/config.js'
 
+import { isCreator } from '../../services/YourGameApi.js'
+import { getIdToken } from '../../services/FirebaseAuth.js'
+
 export default {
 	state: {
 		user: null,
@@ -61,7 +64,6 @@ export default {
 			return new Promise((resolve) => {
 				auth.getRedirectResult()
 					.then((result) => {
-						console.log(result)
 						resolve(result)
 					})
 					.catch((error) => {
@@ -79,6 +81,17 @@ export default {
 							})
 						}
 					})
+			})
+		},
+		isCreator() {
+			return new Promise(async (resolve, reject) => {
+				try {
+					let idToken = await getIdToken()
+					let result = await isCreator(idToken)
+					resolve(result.data.isCreator)
+				} catch (error) {
+					reject(error)
+				}
 			})
 		},
 		async signout() {
