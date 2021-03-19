@@ -232,9 +232,6 @@
 </script>
 
 <style>
-	body {
-		background: #fff;
-	}
 	.game-control-room-wrapper {
 		display: flex;
 		flex-direction: column;

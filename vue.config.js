@@ -1,8 +1,8 @@
-// vue.config.js
-module.exports = {
-	configureWebpack: {
-		externals: {
-			gapi: 'gapi',
-		},
-	},
-}
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+// 	.BundleAnalyzerPlugin
+
+// module.exports = {
+// 	configureWebpack: {
+// 		plugins: [new BundleAnalyzerPlugin()],
+// 	},
+// }

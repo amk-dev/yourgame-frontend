@@ -34,7 +34,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.leaderboard-item {
 		display: flex;
 		justify-content: space-between;
