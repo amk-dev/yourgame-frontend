@@ -1,17 +1,18 @@
 /* eslint-disable no-console */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import SignIn from './views/SignIn.vue'
-import Games from './views/Games.vue'
-import YourMoney from './views/YourMoney'
-import GameControlRoom from './views/GameControlRoom.vue'
-import Play from './views/Play.vue'
 
-import PrivacyPolicy from './views/PrivacyPolicy.vue'
-import TermsOfService from './views/TermsOfService.vue'
-import ErrorPage from './views/ErrorPage.vue'
-import Contest from './views/Contest.vue'
+const Home = () => import('./views/Home.vue')
+const SignIn = () => import('./views/SignIn.vue')
+const Games = () => import('./views/Games.vue')
+const YourMoney = () => import('./views/YourMoney')
+const GameControlRoom = () => import('./views/GameControlRoom.vue')
+const Play = () => import('./views/Play.vue')
+
+const PrivacyPolicy = () => import('./views/PrivacyPolicy.vue')
+const TermsOfService = () => import('./views/TermsOfService.vue')
+const ErrorPage = () => import('./views/ErrorPage.vue')
+const Contest = () => import('./views/Contest.vue')
 
 import store from './store'
 import NProgress from 'nprogress'
