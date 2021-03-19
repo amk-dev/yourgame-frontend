@@ -164,3 +164,11 @@ export async function endContest(firebaseIdToken, contestId) {
 		},
 	})
 }
+
+export async function isCreator(firebaseIdToken) {
+	return api.get('/user/iscreator', {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}

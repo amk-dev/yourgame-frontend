@@ -40,97 +40,40 @@ let router = new Router({
 		},
 		{
 			path: '/games/all',
+			name: 'AllGames',
 			props: true,
 			component: Games,
-			beforeEnter(to, from, next) {
-				store
-					.dispatch('populateAllContests')
-					.then((allContests) => {
-						to.params.contests = allContests
-						to.params.contestsTitle = 'All Games'
-						to.params.context = 'all-games'
-						next()
-					})
-					.catch((error) => {
-						// eslint-disable-next-line
-						console.log(error)
-						next('/something-went-wrong')
-					})
-			},
 			meta: {
 				public: true,
 			},
 		},
 		{
 			path: '/games/joined',
+			name: 'JoinedGames',
 			component: Games,
 			props: true,
-			beforeEnter(to, from, next) {
-				store
-					.dispatch('populateJoinedContests')
-					.then((joinedContests) => {
-						to.params.contests = joinedContests
-						to.params.contestsTitle = 'Joined Contests'
-						to.params.context = 'joined-games'
-						next()
-					})
-					.catch((error) => {
-						// TODO:: Redirect To A 404 Page
-						// eslint-disable-next-line
-						console.log(error)
-					})
-			},
 			meta: {
 				private: true,
 			},
 		},
 		{
 			path: '/games/created',
+			name: 'CreatedGames',
 			props: true,
 			component: Games,
-			beforeEnter(to, from, next) {
-				store
-					.dispatch('populateCreatedContests')
-					.then((createdContests) => {
-						to.params.contests = createdContests
-						to.params.contestsTitle = 'Created Contests'
-						to.params.creator = true
-						to.params.context = 'created-games'
-						next()
-					})
-					.catch((error) => {
-						// eslint-disable-next-line
-						console.log(error)
-						next('/something-went-wrong')
-					})
-			},
 			meta: {
 				private: true,
+				creator: true,
 			},
 		},
 		{
 			path: '/games/new',
+			name: 'NewGame',
 			props: true,
 			component: Games,
-			beforeEnter(to, from, next) {
-				store
-					.dispatch('populateCreatedContests')
-					.then((createdContests) => {
-						to.params.contests = createdContests
-						to.params.contestsTitle = 'Created Contests'
-						to.params.creator = true
-						to.params.context = 'created-games'
-						to.params.showNewContestForm = true
-						next()
-					})
-					.catch((error) => {
-						// eslint-disable-next-line
-						console.log(error)
-						next('/something-went-wrong')
-					})
-			},
 			meta: {
 				private: true,
+				creator: true,
 			},
 		},
 		{
@@ -207,36 +150,132 @@ let router = new Router({
 	},
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 	NProgress.start()
 
-	if (to.matched.some((record) => record.meta.guest)) {
-		if (store.getters.isAuthenticated) {
-			console.log(to.query)
-			if (to.query.redirect) {
-				next(to.query.redirect)
-			} else {
-				next('/')
+	const isAuthenticated = store.getters.isAuthenticated
+
+	if (isGuestRoute(to)) {
+		if (to.name == 'SignIn') {
+			try {
+				let result = await store.dispatch('checkForSignInErrors')
+
+				if (result.user) {
+					let redirectTo = to.query.redirect
+					return redirectTo
+						? next(redirectTo)
+						: next({ name: 'AllGames' })
+				}
+			} catch (error) {
+				console.log(error)
+				return next({
+					name: 'SomethingWentWrong',
+				})
 			}
-		} else {
-			next()
 		}
-	} else if (to.matched.some((record) => record.meta.private)) {
-		store.getters.isAuthenticated
-			? next()
-			: next({
-					path: '/signin',
-					query: {
-						redirect: to.fullPath,
-					},
-			  })
-	} else {
-		next()
+
+		if (isAuthenticated) {
+			return next({
+				name: 'Home',
+			})
+		}
 	}
+
+	if (isPrivateRoute(to)) {
+		if (!isAuthenticated) {
+			return next({
+				path: '/signin',
+				query: {
+					redirect: to.fullPath,
+				},
+			})
+		}
+	}
+
+	if (isCreatorRoute(to)) {
+		try {
+			let isCreator = await store.dispatch('isCreator')
+
+			if (!isCreator) {
+				return next({
+					name: 'PageNotFound',
+				})
+			}
+		} catch (error) {
+			console.log(error)
+			return next({
+				name: 'SomethingWentWrong',
+			})
+		}
+	}
+
+	if (to.name == 'AllGames') {
+		try {
+			const allContests = await store.dispatch('populateAllContests')
+			to.params.contests = allContests
+			to.params.contestsTitle = 'All Games'
+			to.params.context = 'all-games'
+			return next()
+		} catch (error) {
+			console.log(error)
+			return next('/something-went-wrong')
+		}
+	}
+
+	if (to.name == 'JoinedGames') {
+		try {
+			const joinedContests = await store.dispatch(
+				'populateJoinedContests'
+			)
+			to.params.contests = joinedContests
+			to.params.contestsTitle = 'Joined Contests'
+			to.params.context = 'joined-games'
+
+			return next()
+		} catch (error) {
+			console.log(error)
+			return next('/something-went-wrong')
+		}
+	}
+
+	if (to.name == 'CreatedGames' || to.name == 'NewGame') {
+		try {
+			const createdContests = await store.dispatch(
+				'populateCreatedContests'
+			)
+			to.params.contests = createdContests
+			to.params.contestsTitle = 'Created Contests'
+			to.params.creator = true
+			to.params.context = 'created-games'
+
+			if (to.name == 'NewGame') {
+				to.params.showNewContestForm = true
+			}
+
+			next()
+		} catch (error) {
+			console.log(error)
+			return next('/something-went-wrong')
+		}
+	}
+
+	return next()
 })
 
 router.afterEach(() => {
 	NProgress.done()
 })
+
+function isGuestRoute(route) {
+	return route.matched.some((routeRecord) => routeRecord.meta.guest)
+}
+
+function isPrivateRoute(route) {
+	return route.matched.some((routeRecord) => routeRecord.meta.private)
+}
+
+function isCreatorRoute(route) {
+	return route.matched.some((routeRecord) => routeRecord.meta.creator)
+}
 
 export default router

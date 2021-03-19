@@ -30,6 +30,7 @@
 				:contest-id="contest._id"
 				:contest-time="contestTime"
 				:contest-date="contestDate"
+				:contest-status="contest.status"
 			></game-card-footer>
 
 			<yg-transition name="fade">

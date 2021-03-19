@@ -91,6 +91,4 @@ store.dispatch('auth').then(() => {
 		store,
 		render: (h) => h(App),
 	}).$mount('#app')
-
-	NProgress.done()
 })

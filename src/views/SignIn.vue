@@ -94,14 +94,6 @@
 				this.$store.dispatch('signinWithGoogle')
 			},
 		},
-		mounted() {
-			this.$store.dispatch('checkForSignInErrors').then((result) => {
-				if (result.user) {
-					let redirectTo = this.$route.query.redirect
-					this.$router.replace(redirectTo ? redirectTo : '/games/all')
-				}
-			})
-		},
 	}
 </script>
 
