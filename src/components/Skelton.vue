@@ -39,5 +39,6 @@
 		min-height: 0vh !important;
 		position: relative;
 		justify-content: flex-start;
+		padding: 0 24px;
 	}
 </style>

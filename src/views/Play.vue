@@ -50,10 +50,6 @@
 </script>
 
 <style>
-	body {
-		background: #f2f6fc;
-	}
-
 	@media screen and (min-width: 768px) {
 		.is-fullheight-not-mobile {
 			min-height: 100vh;

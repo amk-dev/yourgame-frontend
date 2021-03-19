@@ -104,6 +104,16 @@
 		cursor: pointer;
 	}
 
+	.name-and-avatar {
+		display: flex;
+		align-items: center;
+	}
+
+	.name {
+		margin-left: 8px;
+		font-weight: 700;
+	}
+
 	@media screen and (max-width: 768px) {
 		.dropdown .name {
 			display: none;

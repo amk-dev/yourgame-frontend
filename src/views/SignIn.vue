@@ -129,7 +129,7 @@
 		flex-direction: column;
 		min-height: 100vh;
 		position: relative;
-		justify-content: center;
+		justify-content: flex-start;
 	}
 	.signin-container {
 		min-height: 100vh;
