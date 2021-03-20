@@ -172,3 +172,17 @@ export async function isCreator(firebaseIdToken) {
 		},
 	})
 }
+
+export async function addRefferal(firebaseIdToken, refferalId) {
+	return api.post(
+		'/user/refferal',
+		{
+			refferalId: refferalId,
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${firebaseIdToken}`,
+			},
+		}
+	)
+}
