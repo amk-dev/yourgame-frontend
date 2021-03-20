@@ -153,6 +153,10 @@ let router = new Router({
 router.beforeEach(async (to, from, next) => {
 	NProgress.start()
 
+	if (to.query.refId) {
+		localStorage.setItem('refferedBy', to.query.refId)
+	}
+
 	const isAuthenticated = store.getters.isAuthenticated
 
 	if (isGuestRoute(to)) {

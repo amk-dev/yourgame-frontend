@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { auth, authProviders } from '@/config.js'
 
-import { isCreator } from '../../services/YourGameApi.js'
+import { addRefferal, isCreator } from '../../services/YourGameApi.js'
 import { getIdToken } from '../../services/FirebaseAuth.js'
 
 export default {
@@ -49,6 +49,7 @@ export default {
 				auth.onAuthStateChanged(function(user) {
 					console.log('auth state changed')
 					commit('SET_USER', user)
+
 					resolve()
 				})
 			})
@@ -60,10 +61,27 @@ export default {
 
 			auth.signInWithRedirect(provider)
 		},
-		checkForSignInErrors({ commit }) {
+		checkForSignInErrors({ commit, dispatch }) {
 			return new Promise((resolve) => {
 				auth.getRedirectResult()
 					.then((result) => {
+						if (
+							result.user &&
+							result.additionalUserInfo.isNewUser
+						) {
+							const refferedBy = localStorage.getItem(
+								'refferedBy'
+							)
+
+							localStorage.removeItem('refferedBy')
+
+							if (refferedBy) {
+								dispatch('addRefferal', refferedBy)
+							} else {
+								dispatch('addRefferal', null)
+							}
+						}
+
 						resolve(result)
 					})
 					.catch((error) => {
@@ -102,6 +120,19 @@ export default {
 				console.log(e)
 				return false
 			}
+		},
+		addRefferal(context, refferedBy) {
+			return new Promise(async (resolve, reject) => {
+				try {
+					let idToken = await getIdToken()
+					let result = await addRefferal(idToken, refferedBy)
+
+					resolve(result.data.success)
+				} catch (error) {
+					console.log(error)
+					reject(false)
+				}
+			})
 		},
 	},
 }
