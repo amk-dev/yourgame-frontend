@@ -1,9 +1,7 @@
 <template>
 	<div class="answer-buttons">
 		<div class="answer-buttons-header mb-3">
-			<h2 class="answer-buttons-text ">
-				Choose Your Answer
-			</h2>
+			<h2 class="answer-buttons-text">Choose Your Answer</h2>
 		</div>
 
 		<default-button

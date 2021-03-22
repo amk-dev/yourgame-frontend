@@ -24,7 +24,7 @@
 	}
 	.primary-button:disabled {
 		background: #b3bfff;
-}
+	}
 	.primary-button:hover {
 		color: #fff;
 		background: #002bff;

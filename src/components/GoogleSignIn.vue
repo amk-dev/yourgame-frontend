@@ -18,7 +18,7 @@
 			}
 		},
 		methods: {
-			start: function() {
+			start: function () {
 				gapi.load('auth2', () => {
 					gapi.auth2.init({
 						client_id:
@@ -62,14 +62,14 @@
 					}
 				}
 			},
-			startSignin: function() {
+			startSignin: function () {
 				// no checks for if the user is signed in
 				gapi.auth2
 					.getAuthInstance()
 					.grantOfflineAccess()
 					.then(this.authCodeReceived)
 			},
-			authCodeReceived: function(res) {
+			authCodeReceived: function (res) {
 				this.authcode = res.code
 			},
 			linkToFirebaseAndSignIn(user) {
@@ -105,7 +105,7 @@
 				)
 			},
 		},
-		mounted: async function() {
+		mounted: async function () {
 			if (document.getElementById('googleSignInScript') == null) {
 				let script = document.createElement('script')
 				script.setAttribute('id', 'googleSignInScript')

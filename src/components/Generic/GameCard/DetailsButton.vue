@@ -1,8 +1,6 @@
 <template>
 	<router-link :to="contestLink" class="contest-details-button">
-		<primary-button class="game-card-button ">
-			Details
-		</primary-button>
+		<primary-button class="game-card-button"> Details </primary-button>
 	</router-link>
 </template>
 <script>

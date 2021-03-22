@@ -23,7 +23,6 @@
 <script>
 	import Navbar from '../components/Navigation/NavBar.vue'
 	import YourFunds from '../components/YourFunds.vue'
-	import { mapGetters } from 'vuex'
 
 	export default {
 		name: 'Home',

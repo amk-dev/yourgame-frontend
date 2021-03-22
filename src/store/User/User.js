@@ -46,7 +46,7 @@ export default {
 	actions: {
 		auth({ commit }) {
 			return new Promise((resolve) => {
-				auth.onAuthStateChanged(function(user) {
+				auth.onAuthStateChanged(function (user) {
 					console.log('auth state changed')
 					commit('SET_USER', user)
 

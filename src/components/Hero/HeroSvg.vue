@@ -17,7 +17,7 @@
 				/>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="23.1"
 					font-weight="bold"
@@ -27,7 +27,7 @@
 				</text>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="29.7"
 					font-weight="bold"
@@ -354,7 +354,7 @@
 			<g id="yg-hero-question-top">
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="24"
 					font-weight="bold"
@@ -383,7 +383,7 @@
 				/>
 				<g class="answer" fill="#000">
 					<text
-						style="white-space:pre"
+						style="white-space: pre"
 						font-family="Lato"
 						font-size="18"
 						letter-spacing="0em"
@@ -391,7 +391,7 @@
 						<tspan x="387.4" y="513.5">Rectangle</tspan>
 					</text>
 					<text
-						style="white-space:pre"
+						style="white-space: pre"
 						font-family="Lato"
 						font-size="18"
 						letter-spacing="0em"
@@ -413,7 +413,7 @@
 				/>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="18"
 					letter-spacing="0em"
@@ -422,7 +422,7 @@
 				</text>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="18"
 					letter-spacing="0em"
@@ -443,7 +443,7 @@
 				/>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="18"
 					letter-spacing="0em"
@@ -452,7 +452,7 @@
 				</text>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="18"
 					letter-spacing="0em"
@@ -473,7 +473,7 @@
 				/>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="18"
 					letter-spacing="0em"
@@ -482,7 +482,7 @@
 				</text>
 				<text
 					fill="#000"
-					style="white-space:pre"
+					style="white-space: pre"
 					font-family="Lato"
 					font-size="18"
 					letter-spacing="0em"
@@ -532,7 +532,7 @@
 <script>
 	export default {
 		name: 'HeroSVG',
-		data: function() {
+		data: function () {
 			return {
 				showCongratulations: false,
 			}

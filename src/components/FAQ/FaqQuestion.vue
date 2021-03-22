@@ -23,7 +23,7 @@
 		components: {
 			YgTranstion,
 		},
-		data: function() {
+		data: function () {
 			return {
 				showAnswer: false,
 			}

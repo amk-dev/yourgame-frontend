@@ -18,9 +18,7 @@
 						</div>
 					</div>
 					<ul class="options mt-5">
-						<li class="option" id="option1">
-							A. Rectangle
-						</li>
+						<li class="option" id="option1">A. Rectangle</li>
 						<li class="option" id="option2">B. Circle</li>
 						<li class="option" id="option3">C. Triangle</li>
 						<li class="option" id="option4">D. Hexagon</li>

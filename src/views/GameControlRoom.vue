@@ -137,8 +137,8 @@
 							@click.native="getNextQuestion"
 							:disabled="
 								isGettingNextQuestion ||
-									!isRemainingTimeZero ||
-									isQuestionsOver
+								!isRemainingTimeZero ||
+								isQuestionsOver
 							"
 							>{{
 								isQuestionsOver
@@ -183,7 +183,7 @@
 			Winnings,
 			FeedbackBox,
 		},
-		data: function() {
+		data: function () {
 			return {
 				leaderboardStyles: {
 					'box-shadow': '4px 4px 12px rgba(0, 0, 0, 0.1)',

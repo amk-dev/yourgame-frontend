@@ -36,7 +36,7 @@
 			PrimaryButton,
 			AvatarDropdown,
 		},
-		data: function() {
+		data: function () {
 			return {
 				showDropdown: false,
 			}

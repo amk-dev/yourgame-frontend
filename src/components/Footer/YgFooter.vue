@@ -13,9 +13,7 @@
 							<font-awesome-icon
 								:icon="['far', 'copyright']"
 							></font-awesome-icon>
-							<span>
-								2021 Akash Mohan
-							</span>
+							<span> 2021 Akash Mohan </span>
 						</p>
 					</div>
 				</div>
@@ -43,9 +41,7 @@
 											<font-awesome-icon
 												:icon="['fab', 'twitter']"
 											></font-awesome-icon>
-											<span class="ml-1">
-												Twitter
-											</span>
+											<span class="ml-1"> Twitter </span>
 										</a>
 									</li>
 
@@ -64,9 +60,7 @@
 						</div>
 						<div class="column">
 							<div class="footer-section">
-								<div class="footer-section-title">
-									Legal
-								</div>
+								<div class="footer-section-title">Legal</div>
 								<ul class="footer-list mt-4">
 									<li class="mb-2">
 										<router-link to="/privacy-policy">

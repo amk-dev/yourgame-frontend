@@ -24,13 +24,11 @@
 					<success-message
 						v-if="
 							activeContest.isJoined &&
-								activeContest.status == 'upcoming'
+							activeContest.status == 'upcoming'
 						"
 						type="success"
 						button-title="Go To Playground"
-						:button-link="
-							`/contest/${$route.params.contestId}/play`
-						"
+						:button-link="`/contest/${$route.params.contestId}/play`"
 					>
 						You have successfully joined the contest. Visit Contest
 						Playground At
@@ -41,13 +39,11 @@
 					<success-message
 						v-if="
 							activeContest.isJoined &&
-								activeContest.status == 'live'
+							activeContest.status == 'live'
 						"
 						type="success"
 						button-title="Go To Playground"
-						:button-link="
-							`/contest/${$route.params.contestId}/play`
-						"
+						:button-link="`/contest/${$route.params.contestId}/play`"
 					>
 						The Contest Is Live. Go to the Playground to play.
 					</success-message>
@@ -55,13 +51,11 @@
 					<success-message
 						v-if="
 							activeContest.status == 'live' &&
-								!activeContest.isJoined
+							!activeContest.isJoined
 						"
 						type="info"
 						buttonTitle="Watch"
-						:buttonLink="
-							`https://youtu.be/${activeContest.youtubeVideoId}`
-						"
+						:buttonLink="`https://youtu.be/${activeContest.youtubeVideoId}`"
 					>
 						The Contest Is Live Now. You haven't joined the contest.
 						but you can watch the live show on Youtube

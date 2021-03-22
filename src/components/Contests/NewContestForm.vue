@@ -130,7 +130,7 @@
 	// TODO:: Add Validations And Make Sure This Can Be Used By All Other Creators
 	export default {
 		name: 'NewContestForm',
-		data: function() {
+		data: function () {
 			return {
 				newContest: {
 					youtubeVideoId: null,
@@ -285,10 +285,8 @@
 						youtubeVideoId: this.newContest.youtubeVideoId,
 						contestDateAndTimeTimestamp,
 					})
-					.then((contest) => {
-						console.log(contest)
-					})
 					.catch((error) => {
+						// eslint-disable-next-line no-console
 						console.log(error)
 					})
 			},

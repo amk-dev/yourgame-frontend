@@ -38,7 +38,6 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
 	import LeaderboardItem from './../Leaderboard/LeaderboardItem.vue'
 	export default {
 		name: 'Leaderboard',

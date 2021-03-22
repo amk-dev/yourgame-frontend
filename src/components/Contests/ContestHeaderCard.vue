@@ -3,9 +3,7 @@
 		<header class="game-card-header">
 			<h3>Whats On The Screen</h3>
 			<div class="hosted-by">
-				<span class="hosted-by-placeholder">
-					Hosted By
-				</span>
+				<span class="hosted-by-placeholder"> Hosted By </span>
 				<figure class="image is-24x24">
 					<img
 						class="is-rounded"

@@ -173,7 +173,7 @@ export default {
 
 				if (remainingTime == 0) {
 					clearInterval(interval)
-					setTimeout(function() {
+					setTimeout(function () {
 						dispatch('closeCurrentQuestion', contestId)
 					}, 3000)
 				}
@@ -215,7 +215,7 @@ export default {
 			})
 		},
 		endContest({ commit }, contestId) {
-			return new Promise(async function(resolve, reject) {
+			return new Promise(async function (resolve, reject) {
 				commit('SET_IS_ENDING_CONTEST', true)
 
 				try {

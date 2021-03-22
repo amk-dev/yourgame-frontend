@@ -10,7 +10,7 @@
 		name: 'FeedbackNotifications',
 		props: ['type', 'message'],
 		computed: {
-			stylesBasedOnType: function() {
+			stylesBasedOnType: function () {
 				const styles = {
 					info: {
 						background: '#0a85ed',
@@ -22,7 +22,7 @@
 
 				return styles[this.type]
 			},
-			icon: function() {
+			icon: function () {
 				const icons = {
 					info: 'check-circle',
 					danger: 'times-circle',

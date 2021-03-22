@@ -38,7 +38,7 @@
 	export default {
 		components: { FaqQuestion },
 		name: 'FAQ',
-		data: function() {
+		data: function () {
 			return {
 				questionsAndAnswers: [
 					{

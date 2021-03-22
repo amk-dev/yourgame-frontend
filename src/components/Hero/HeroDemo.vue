@@ -50,7 +50,7 @@
 			restartAnimation() {
 				this.showQuiz = true
 			},
-			animationEnd: function(data) {
+			animationEnd: function (data) {
 				console.log(data)
 
 				if (data.animationName == 'fadeOut') {

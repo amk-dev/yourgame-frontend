@@ -31,7 +31,7 @@
 		components: {
 			AnswerButtons,
 		},
-		data: function() {
+		data: function () {
 			return {
 				isFullscreen: false,
 				optionsVisible: false,

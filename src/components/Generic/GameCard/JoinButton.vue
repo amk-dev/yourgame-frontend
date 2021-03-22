@@ -1,7 +1,5 @@
 <template>
-	<primary-button class="game-card-button">
-		Join
-	</primary-button>
+	<primary-button class="game-card-button"> Join </primary-button>
 </template>
 
 <script>
