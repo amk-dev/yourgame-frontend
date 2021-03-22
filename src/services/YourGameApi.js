@@ -1,4 +1,3 @@
-/* eslint-disable */
 import axios from 'axios'
 
 let baseURL = 'http://localhost:3000/'
@@ -24,9 +23,9 @@ export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
 				},
 			}
 		)
-		console.log(result)
 		return result.data
 	} catch (error) {
+		// eslint-disable-next-line
 		console.log(error)
 		return {
 			error: true,
@@ -63,7 +62,7 @@ export async function getMyContests(firebaseIdToken) {
 	return result.data
 }
 
-export function getAllContests(firebaseIdToken) {
+export function getAllContests() {
 	return api.get('/contest/all')
 }
 

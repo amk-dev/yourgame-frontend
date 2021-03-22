@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -171,6 +170,7 @@ router.beforeEach(async (to, from, next) => {
 						: next({ name: 'AllGames' })
 				}
 			} catch (error) {
+				// eslint-disable-next-line
 				console.log(error)
 				return next({
 					name: 'SomethingWentWrong',
@@ -206,6 +206,7 @@ router.beforeEach(async (to, from, next) => {
 				})
 			}
 		} catch (error) {
+			// eslint-disable-next-line
 			console.log(error)
 			return next({
 				name: 'SomethingWentWrong',
@@ -221,6 +222,7 @@ router.beforeEach(async (to, from, next) => {
 			to.params.context = 'all-games'
 			return next()
 		} catch (error) {
+			// eslint-disable-next-line
 			console.log(error)
 			return next('/something-went-wrong')
 		}
@@ -237,6 +239,7 @@ router.beforeEach(async (to, from, next) => {
 
 			return next()
 		} catch (error) {
+			// eslint-disable-next-line
 			console.log(error)
 			return next('/something-went-wrong')
 		}
@@ -258,6 +261,7 @@ router.beforeEach(async (to, from, next) => {
 
 			next()
 		} catch (error) {
+			// eslint-disable-next-line
 			console.log(error)
 			return next('/something-went-wrong')
 		}

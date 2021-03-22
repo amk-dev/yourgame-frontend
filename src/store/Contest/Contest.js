@@ -133,188 +133,171 @@ export default {
 		},
 	},
 	actions: {
-		createNewContest(
+		async createNewContest(
 			{ commit },
 			{ youtubeVideoId, contestDateAndTimeTimestamp }
 		) {
-			return new Promise(async (resolve, reject) => {
-				commit('SET_IS_CREATING_CONTEST', true)
+			commit('SET_IS_CREATING_CONTEST', true)
+			commit('SET_CREATE_NEW_CONTEST_FEEDBACK', {
+				type: 'info',
+				message: 'Creating New Contest',
+			})
+
+			try {
+				let idToken = await getIdToken()
+
+				let result = await createContest(
+					idToken,
+					youtubeVideoId,
+					contestDateAndTimeTimestamp
+				)
+
 				commit('SET_CREATE_NEW_CONTEST_FEEDBACK', {
-					type: 'info',
-					message: 'Creating New Contest',
+					type: 'success',
+					message: 'Contest Created Successfully',
 				})
 
-				try {
-					let idToken = await getIdToken()
+				commit('SET_IS_CREATING_CONTEST', false)
 
-					let result = await createContest(
-						idToken,
-						youtubeVideoId,
-						contestDateAndTimeTimestamp
-					)
-
-					resolve(result.data)
-
+				return result.data
+			} catch (error) {
+				if (error.response) {
 					commit('SET_CREATE_NEW_CONTEST_FEEDBACK', {
-						type: 'success',
-						message: 'Contest Created Successfully',
+						type: 'error',
+						message: 'Error From The Server',
 					})
-				} catch (error) {
-					if (error.response) {
-						reject(error.response)
-
-						commit('SET_CREATE_NEW_CONTEST_FEEDBACK', {
-							type: 'error',
-							message: 'Error From The Server',
-						})
-					} else {
-						reject({
-							error: true,
-							message: 'something-went-wrong',
-						})
-
-						commit('SET_CREATE_NEW_CONTEST_FEEDBACK', {
-							type: 'error',
-							message: 'Something Went Wrong',
-						})
-					}
-				} finally {
-					commit('SET_IS_CREATING_CONTEST', false)
+				} else {
+					commit('SET_CREATE_NEW_CONTEST_FEEDBACK', {
+						type: 'error',
+						message: 'Something Went Wrong',
+					})
 				}
-			})
+
+				commit('SET_IS_CREATING_CONTEST', false)
+
+				throw error
+			}
 		},
 		resetContestFeedback({ commit }) {
 			commit('SET_CREATE_NEW_CONTEST_FEEDBACK', null)
 		},
-		populateAllContests({ commit }) {
-			return new Promise(async (resolve, reject) => {
-				commit('SET_IS_POPULATING_ALL_CONTESTS', true)
-				try {
-					let result = await getAllContests()
-					resolve(result.data)
-					commit('SET_ALL_CONTESTS', result.data)
-				} catch (error) {
-					reject({
-						error: true,
-						message: 'something-went-wrong',
-					})
-				} finally {
-					commit('SET_IS_POPULATING_ALL_CONTESTS', false)
-				}
-			})
+		async populateAllContests({ commit }) {
+			commit('SET_IS_POPULATING_ALL_CONTESTS', true)
+			try {
+				let result = await getAllContests()
+
+				commit('SET_ALL_CONTESTS', result.data)
+				commit('SET_IS_POPULATING_ALL_CONTESTS', false)
+				return result.data
+			} catch (error) {
+				commit('SET_IS_POPULATING_ALL_CONTESTS', false)
+				throw error
+			}
 		},
-		populateJoinedContests({ commit }) {
-			return new Promise(async (resolve, reject) => {
-				commit('SET_IS_POPULATING_JOINED_CONTESTS', true)
-				try {
-					let idToken = await getIdToken()
-					let result = await getJoinedContests(idToken)
-					resolve(result.data)
-					commit('SET_JOINED_CONTESTS', result.data)
-				} catch (error) {
-					reject({
-						error: true,
-						message: 'something-went-wrong',
-					})
-				} finally {
-					commit('SET_IS_POPULATING_JOINED_CONTESTS', false)
-				}
-			})
+		async populateJoinedContests({ commit }) {
+			commit('SET_IS_POPULATING_JOINED_CONTESTS', true)
+			try {
+				let idToken = await getIdToken()
+				let result = await getJoinedContests(idToken)
+
+				commit('SET_JOINED_CONTESTS', result.data)
+				commit('SET_IS_POPULATING_JOINED_CONTESTS', false)
+
+				return result.data
+			} catch (error) {
+				commit('SET_IS_POPULATING_JOINED_CONTESTS', false)
+
+				throw error
+			}
 		},
-		populateCreatedContests({ commit }) {
-			return new Promise(async (resolve, reject) => {
-				commit('SET_IS_POPULATING_CREATED_CONTESTS', true)
-				try {
-					let idToken = await getIdToken()
-					let result = await getCreatedContests(idToken)
-					resolve(result.data)
-					commit('SET_CREATED_CONTESTS', result.data)
-				} catch (error) {
-					reject({
-						error: true,
-						message: 'something-went-wrong',
-					})
-				} finally {
-					commit('SET_IS_POPULATING_CREATED_CONTESTS', false)
-				}
-			})
+		async populateCreatedContests({ commit }) {
+			commit('SET_IS_POPULATING_CREATED_CONTESTS', true)
+			try {
+				let idToken = await getIdToken()
+				let result = await getCreatedContests(idToken)
+
+				commit('SET_CREATED_CONTESTS', result.data)
+				commit('SET_IS_POPULATING_CREATED_CONTESTS', false)
+
+				return result.data
+			} catch (error) {
+				commit('SET_IS_POPULATING_CREATED_CONTESTS', false)
+				throw error
+			}
 		},
-		getSingleContest({ commit, getters }, contestId) {
-			return new Promise(async (resolve, reject) => {
-				try {
-					let idToken = null
+		async getSingleContest({ commit, getters }, contestId) {
+			try {
+				let idToken = null
 
-					if (getters.isAuthenticated) {
-						idToken = await getIdToken()
-					}
-
-					let result = await getContestById(contestId, idToken)
-					resolve(result.data)
-					commit('SET_ACTIVE_CONTEST', result.data)
-				} catch (error) {
-					// eslint-disable-next-line no-console
-					console.log(error)
-
-					reject({
-						error: true,
-						message: 'something-went-wrong',
-					})
-					commit('SET_ACTIVE_CONTEST_ERROR', true)
+				if (getters.isAuthenticated) {
+					idToken = await getIdToken()
 				}
-			})
+
+				let result = await getContestById(contestId, idToken)
+
+				commit('SET_ACTIVE_CONTEST', result.data)
+
+				return result.data
+			} catch (error) {
+				commit('SET_ACTIVE_CONTEST_ERROR', true)
+				throw error
+			}
 		},
-		joinContestWithId({ commit }, contestId) {
-			return new Promise(async (resolve, reject) => {
-				commit('SET_IS_JOINING_CONTEST', true)
+		async joinContestWithId({ commit }, contestId) {
+			commit('SET_IS_JOINING_CONTEST', true)
 
-				try {
-					let idToken = await getIdToken()
+			try {
+				let idToken = await getIdToken()
 
-					const result = await joinContest(idToken, contestId)
-					resolve(result.data)
-					commit('SET_JOINING_CONTEST_FEEDBACK', {
-						type: 'success',
-						message: 'Joined Contest Successfully',
-					})
-					commit('SET_IS_JOINED')
-				} catch (error) {
-					reject(error)
-					commit('SET_JOINING_CONTEST_FEEDBACK', {
-						type: 'error',
-						message: 'Something Went Wrong. Please Try Again',
-					})
-				} finally {
-					commit('SET_IS_JOINING_CONTEST', false)
-				}
-			})
+				const result = await joinContest(idToken, contestId)
+
+				commit('SET_JOINING_CONTEST_FEEDBACK', {
+					type: 'success',
+					message: 'Joined Contest Successfully',
+				})
+				commit('SET_IS_JOINED')
+
+				commit('SET_IS_JOINING_CONTEST', false)
+
+				return result.data
+			} catch (error) {
+				commit('SET_JOINING_CONTEST_FEEDBACK', {
+					type: 'error',
+					message: 'Something Went Wrong. Please Try Again',
+				})
+
+				commit('SET_IS_JOINING_CONTEST', false)
+
+				throw error
+			}
 		},
 		clearJoinContestFeedback({ commit }) {
 			commit('SET_JOINING_CONTEST_FEEDBACK', null)
 		},
-		getContestLeaderboard({ commit }, contestId) {
+		async getContestLeaderboard({ commit }, contestId) {
 			commit('SET_IS_GETTING_LEADERBOARD', true)
 
-			return new Promise(async (resolve, reject) => {
-				try {
-					let result = await getLeaderboard(contestId)
-					resolve(result.data)
+			try {
+				let result = await getLeaderboard(contestId)
 
-					commit('SET_LEADERBOARD', result.data)
+				commit('SET_LEADERBOARD', result.data)
 
-					commit('SET_GETTING_LEADERBOARD_FEEDBACK', {
-						type: 'success',
-						message: 'Leaderboard Fetched Succesfully',
-					})
-				} catch (e) {
-					reject(e)
-					commit('SET_GETTING_LEADERBOARD_FEEDBACK', {
-						type: 'error',
-						message: 'Something Went Wrong',
-					})
-				} finally {
-					commit('SET_IS_GETTING_LEADERBOARD', false)
-				}
-			})
+				commit('SET_GETTING_LEADERBOARD_FEEDBACK', {
+					type: 'success',
+					message: 'Leaderboard Fetched Succesfully',
+				})
+
+				return result.data
+			} catch (error) {
+				commit('SET_IS_GETTING_LEADERBOARD', false)
+
+				commit('SET_GETTING_LEADERBOARD_FEEDBACK', {
+					type: 'error',
+					message: 'Something Went Wrong',
+				})
+
+				throw error
+			}
 		},
 	},
 }

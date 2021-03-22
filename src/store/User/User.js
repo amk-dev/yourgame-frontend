@@ -101,16 +101,10 @@ export default {
 					})
 			})
 		},
-		isCreator() {
-			return new Promise(async (resolve, reject) => {
-				try {
-					let idToken = await getIdToken()
-					let result = await isCreator(idToken)
-					resolve(result.data.isCreator)
-				} catch (error) {
-					reject(error)
-				}
-			})
+		async isCreator() {
+			let idToken = await getIdToken()
+			let result = await isCreator(idToken)
+			return result.data.isCreator
 		},
 		async signout() {
 			try {
@@ -121,18 +115,15 @@ export default {
 				return false
 			}
 		},
-		addRefferal(context, refferedBy) {
-			return new Promise(async (resolve, reject) => {
-				try {
-					let idToken = await getIdToken()
-					let result = await addRefferal(idToken, refferedBy)
+		async addRefferal(context, refferedBy) {
+			try {
+				let idToken = await getIdToken()
+				let result = await addRefferal(idToken, refferedBy)
 
-					resolve(result.data.success)
-				} catch (error) {
-					console.log(error)
-					reject(false)
-				}
-			})
+				return result.data.success
+			} catch (error) {
+				throw error
+			}
 		},
 	},
 }

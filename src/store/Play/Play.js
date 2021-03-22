@@ -16,53 +16,47 @@ export default {
 		},
 	},
 	actions: {
-		answerQuestion({ commit, dispatch }, { answer, contestId }) {
-			return new Promise(async (reject, resolve) => {
-				commit('IS_ANSWERING_QUESTION', true)
-				try {
-					const idToken = await getIdToken()
-					const result = await answerQuestion(
-						idToken,
-						contestId,
-						answer
-					)
-					dispatch('addNotification', {
-						type: 'info',
-						message: 'Answer Submitted',
-					})
+		async answerQuestion({ commit, dispatch }, { answer, contestId }) {
+			commit('IS_ANSWERING_QUESTION', true)
+			try {
+				const idToken = await getIdToken()
+				const result = await answerQuestion(idToken, contestId, answer)
+				dispatch('addNotification', {
+					type: 'info',
+					message: 'Answer Submitted',
+				})
 
-					resolve(result.data)
-				} catch (error) {
-					if (error.response) {
-						let errorMessages = {
-							'contest-not-started':
-								'Contest Not Yet Started. Wait For The Contest To Start',
-							'answering-not-open':
-								'Answering Not Open. Please Wait For The Next Question',
-							'question-already-answered':
-								'You have already answered the current question. Wait for the next question',
-						}
+				commit('IS_ANSWERING_QUESTION', false)
 
-						let message = error.response.data.message
-
-						if (errorMessages[message]) {
-							dispatch('addNotification', {
-								type: 'danger',
-								message: errorMessages[message],
-							})
-						} else {
-							dispatch('addNotification', {
-								type: 'danger',
-								message: 'Something Went Wrong.',
-							})
-						}
+				return result.data
+			} catch (error) {
+				if (error.response) {
+					let errorMessages = {
+						'contest-not-started':
+							'Contest Not Yet Started. Wait For The Contest To Start',
+						'answering-not-open':
+							'Answering Not Open. Please Wait For The Next Question',
+						'question-already-answered':
+							'You have already answered the current question. Wait for the next question',
 					}
 
-					reject(error)
-				} finally {
-					commit('IS_ANSWERING_QUESTION', false)
+					let message = error.response.data.message
+
+					if (errorMessages[message]) {
+						dispatch('addNotification', {
+							type: 'danger',
+							message: errorMessages[message],
+						})
+					} else {
+						dispatch('addNotification', {
+							type: 'danger',
+							message: 'Something Went Wrong.',
+						})
+					}
 				}
-			})
+
+				throw error
+			}
 		},
 	},
 }
