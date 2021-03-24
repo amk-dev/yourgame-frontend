@@ -199,6 +199,7 @@ export const actions = {
 			return result.data
 		} catch (error) {
 			commit('SET_IS_POPULATING_JOINED_CONTESTS', false)
+			captureException(error)
 		}
 	},
 	async populateCreatedContests({ commit }) {
@@ -213,7 +214,7 @@ export const actions = {
 			return result.data
 		} catch (error) {
 			commit('SET_IS_POPULATING_CREATED_CONTESTS', false)
-			throw error
+			captureException(error)
 		}
 	},
 	async getSingleContest({ commit, getters }, contestId) {
@@ -231,7 +232,7 @@ export const actions = {
 			return result.data
 		} catch (error) {
 			commit('SET_ACTIVE_CONTEST_ERROR', true)
-			throw error
+			captureException(error)
 		}
 	},
 	async joinContestWithId({ commit }, contestId) {
@@ -259,7 +260,7 @@ export const actions = {
 
 			commit('SET_IS_JOINING_CONTEST', false)
 
-			throw error
+			captureException(error)
 		}
 	},
 	clearJoinContestFeedback({ commit }) {
@@ -287,7 +288,7 @@ export const actions = {
 				message: 'Something Went Wrong',
 			})
 
-			throw error
+			captureException(error)
 		}
 	},
 }

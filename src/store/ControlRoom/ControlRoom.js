@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/browser'
 import { getIdToken } from '../../services/FirebaseAuth.js'
 import {
 	closeCurrentQuestion,
@@ -145,7 +146,7 @@ export default {
 
 				commit('SET_IS_STARTING_CONTEST', false)
 
-				throw error
+				captureException(error)
 			}
 		},
 		async closeCurrentQuestion({ commit }, contestId) {
@@ -199,7 +200,7 @@ export default {
 
 				commit('SET_IS_GETTING_NEXT_QUESTION', false)
 
-				throw error
+				captureException(error)
 			}
 		},
 		async endContest({ commit }, contestId) {
@@ -225,7 +226,7 @@ export default {
 
 				commit('SET_IS_ENDING_CONTEST', false)
 
-				throw error
+				captureException(error)
 			}
 		},
 	},

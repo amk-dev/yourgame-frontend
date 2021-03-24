@@ -4,6 +4,8 @@ import App from './App.vue'
 import router from './router.js'
 import store from './store'
 
+import * as Sentry from '@sentry/vue'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
 	faRupeeSign,
@@ -81,6 +83,12 @@ NProgress.configure({ showSpinner: false })
 NProgress.start()
 
 Vue.config.productionTip = false
+
+Sentry.init({
+	Vue: Vue,
+	dsn:
+		'https://9f2145fe82c544f5805f9d7c3df5c7ca@o542002.ingest.sentry.io/5687841',
+})
 
 store.dispatch('auth').then(() => {
 	new Vue({

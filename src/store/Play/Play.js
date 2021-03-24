@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/browser'
 import { getIdToken } from '../../services/FirebaseAuth.js'
 import { answerQuestion } from '../../services/YourGameApi'
 
@@ -55,7 +56,7 @@ export default {
 					}
 				}
 
-				throw error
+				captureException(error)
 			}
 		},
 	},

@@ -2,6 +2,7 @@ import { auth, authProviders } from '@/config.js'
 
 import { addRefferal, isCreator } from '../../services/YourGameApi.js'
 import { getIdToken } from '../../services/FirebaseAuth.js'
+import { captureException } from '@sentry/browser'
 
 export default {
 	state: {
@@ -60,7 +61,7 @@ export default {
 			auth.signInWithRedirect(provider)
 		},
 		checkForSignInErrors({ commit, dispatch }) {
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve) => {
 				auth.getRedirectResult()
 					.then((result) => {
 						if (
@@ -96,7 +97,7 @@ export default {
 							})
 						}
 
-						reject(error)
+						captureException(error)
 					})
 			})
 		},
@@ -109,7 +110,8 @@ export default {
 			try {
 				await auth.signOut()
 				return true
-			} catch (e) {
+			} catch (error) {
+				captureException(error)
 				return false
 			}
 		},
@@ -120,7 +122,7 @@ export default {
 
 				return result.data.success
 			} catch (error) {
-				throw error
+				captureException(error)
 			}
 		},
 	},
