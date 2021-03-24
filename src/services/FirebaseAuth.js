@@ -1,4 +1,4 @@
-import { auth, authProviders } from '@/config.js'
+import { auth, authProviders } from './../config.js'
 
 export function signInWithEmailAndPassword(email, password) {
 	return auth.signInWithEmailAndPassword(email, password)

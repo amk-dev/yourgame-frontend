@@ -62,7 +62,7 @@ export default {
 			auth.signInWithRedirect(provider)
 		},
 		checkForSignInErrors({ commit, dispatch }) {
-			return new Promise((resolve) => {
+			return new Promise((resolve, reject) => {
 				auth.getRedirectResult()
 					.then((result) => {
 						if (
@@ -92,12 +92,13 @@ export default {
 								type: 'error',
 							})
 						} else {
-							console.log(error)
 							commit('SET_SIGNIN_ERROR', {
 								message: 'Signin Failed. Something Went Wrong',
 								type: 'error',
 							})
 						}
+
+						reject(error)
 					})
 			})
 		},

@@ -16,6 +16,8 @@ const Contest = () => import('./views/Contest.vue')
 import store from './store'
 import NProgress from 'nprogress'
 
+import { captureException } from '@sentry/browser'
+
 Vue.use(Router)
 
 let router = new Router({
@@ -170,8 +172,7 @@ router.beforeEach(async (to, from, next) => {
 						: next({ name: 'AllGames' })
 				}
 			} catch (error) {
-				// eslint-disable-next-line
-				console.log(error)
+				captureException(error)
 				return next({
 					name: 'SomethingWentWrong',
 				})
@@ -206,8 +207,8 @@ router.beforeEach(async (to, from, next) => {
 				})
 			}
 		} catch (error) {
-			// eslint-disable-next-line
-			console.log(error)
+			captureException(error)
+
 			return next({
 				name: 'SomethingWentWrong',
 			})
@@ -222,8 +223,7 @@ router.beforeEach(async (to, from, next) => {
 			to.params.context = 'all-games'
 			return next()
 		} catch (error) {
-			// eslint-disable-next-line
-			console.log(error)
+			captureException(error)
 			return next('/something-went-wrong')
 		}
 	}
@@ -239,8 +239,7 @@ router.beforeEach(async (to, from, next) => {
 
 			return next()
 		} catch (error) {
-			// eslint-disable-next-line
-			console.log(error)
+			captureException(error)
 			return next('/something-went-wrong')
 		}
 	}
@@ -261,8 +260,7 @@ router.beforeEach(async (to, from, next) => {
 
 			next()
 		} catch (error) {
-			// eslint-disable-next-line
-			console.log(error)
+			captureException(error)
 			return next('/something-went-wrong')
 		}
 	}
