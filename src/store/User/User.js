@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
 import { auth, authProviders } from '@/config.js'
 
 import { addRefferal, isCreator } from '../../services/YourGameApi.js'
 import { getIdToken } from '../../services/FirebaseAuth.js'
+import { captureException } from '@sentry/browser'
 
 export default {
 	state: {
@@ -47,7 +47,6 @@ export default {
 		auth({ commit }) {
 			return new Promise((resolve) => {
 				auth.onAuthStateChanged(function (user) {
-					console.log('auth state changed')
 					commit('SET_USER', user)
 
 					resolve()
@@ -92,47 +91,39 @@ export default {
 								type: 'error',
 							})
 						} else {
-							console.log(error)
 							commit('SET_SIGNIN_ERROR', {
 								message: 'Signin Failed. Something Went Wrong',
 								type: 'error',
 							})
 						}
+
+						captureException(error)
 					})
 			})
 		},
-		isCreator() {
-			return new Promise(async (resolve, reject) => {
-				try {
-					let idToken = await getIdToken()
-					let result = await isCreator(idToken)
-					resolve(result.data.isCreator)
-				} catch (error) {
-					reject(error)
-				}
-			})
+		async isCreator() {
+			let idToken = await getIdToken()
+			let result = await isCreator(idToken)
+			return result.data.isCreator
 		},
 		async signout() {
 			try {
 				await auth.signOut()
 				return true
-			} catch (e) {
-				console.log(e)
+			} catch (error) {
+				captureException(error)
 				return false
 			}
 		},
-		addRefferal(context, refferedBy) {
-			return new Promise(async (resolve, reject) => {
-				try {
-					let idToken = await getIdToken()
-					let result = await addRefferal(idToken, refferedBy)
+		async addRefferal(context, refferedBy) {
+			try {
+				let idToken = await getIdToken()
+				let result = await addRefferal(idToken, refferedBy)
 
-					resolve(result.data.success)
-				} catch (error) {
-					console.log(error)
-					reject(false)
-				}
-			})
+				return result.data.success
+			} catch (error) {
+				captureException(error)
+			}
 		},
 	},
 }

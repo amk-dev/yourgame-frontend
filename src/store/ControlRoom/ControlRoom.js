@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/browser'
 import { getIdToken } from '../../services/FirebaseAuth.js'
 import {
 	closeCurrentQuestion,
@@ -121,50 +122,40 @@ export default {
 		},
 	},
 	actions: {
-		startContest({ commit, dispatch }, contestId) {
-			commit('SET_IS_STARTING_CONTEST', true)
+		async startContest({ commit, dispatch }, contestId) {
+			try {
+				commit('SET_IS_STARTING_CONTEST', true)
 
-			return new Promise(async (resolve, reject) => {
-				try {
-					const idToken = await getIdToken()
-					let result = await startContest(idToken, contestId)
+				const idToken = await getIdToken()
+				let result = await startContest(idToken, contestId)
 
-					commit('SET_CURRENT_QUESTION', result.data.question)
-					commit('SET_CURRENT_VIEW', 'quiz')
+				commit('SET_CURRENT_QUESTION', result.data.question)
+				commit('SET_CURRENT_VIEW', 'quiz')
 
-					dispatch('startQuestionTimer', contestId)
-					dispatch('pollLeaderboard', contestId)
+				commit('SET_IS_STARTING_CONTEST', false)
 
-					resolve(result.data)
-				} catch (error) {
-					// eslint-disable-next-line
-					console.log(error)
-					commit('SET_IS_STARTING_CONTEST_FEEDBACK', {
-						type: 'error',
-						message: 'Something Went Wrong',
-					})
-					reject(error)
-				} finally {
-					commit('SET_IS_STARTING_CONTEST', false)
-				}
-			})
+				dispatch('startQuestionTimer', contestId)
+				dispatch('pollLeaderboard', contestId)
+
+				return result.data
+			} catch (error) {
+				commit('SET_IS_STARTING_CONTEST_FEEDBACK', {
+					type: 'error',
+					message: 'Something Went Wrong',
+				})
+
+				commit('SET_IS_STARTING_CONTEST', false)
+
+				captureException(error)
+			}
 		},
-		closeCurrentQuestion({ commit }, contestId) {
-			return new Promise(async (resolve, reject) => {
-				try {
-					let idToken = await getIdToken()
+		async closeCurrentQuestion({ commit }, contestId) {
+			let idToken = await getIdToken()
+			let result = await closeCurrentQuestion(idToken, contestId)
 
-					let result = await closeCurrentQuestion(idToken, contestId)
-
-					let question = result.data
-
-					commit('SET_CORRECT_ANSWER', result.data.correct_answer)
-
-					resolve(question)
-				} catch (e) {
-					reject(e)
-				}
-			})
+			let question = result.data
+			commit('SET_CORRECT_ANSWER', result.data.correct_answer)
+			return question
 		},
 		startQuestionTimer({ commit, dispatch, getters }, contestId) {
 			let interval = setInterval(() => {
@@ -188,57 +179,55 @@ export default {
 				}
 			}, 3000)
 		},
-		getNextQuestion({ commit, dispatch }, contestId) {
-			return new Promise(async (resolve, reject) => {
-				try {
-					commit('SET_IS_GETTING_NEXT_QUESTION', true)
+		async getNextQuestion({ commit, dispatch }, contestId) {
+			try {
+				commit('SET_IS_GETTING_NEXT_QUESTION', true)
 
-					const idToken = await getIdToken()
-					const result = await getNextQuestion(idToken, contestId)
+				const idToken = await getIdToken()
+				const result = await getNextQuestion(idToken, contestId)
 
-					commit('SET_CURRENT_QUESTION', result.data.question)
-					commit('RESET_CORRECT_ANSWER')
-					commit('RESET_REMAINING_TIME')
-					dispatch('startQuestionTimer', contestId)
+				commit('SET_CURRENT_QUESTION', result.data.question)
+				commit('RESET_CORRECT_ANSWER')
+				commit('RESET_REMAINING_TIME')
+				dispatch('startQuestionTimer', contestId)
 
-					resolve(result.data)
-				} catch (error) {
-					commit('IS_GETTING_NEXT_QUESTION_FEEDBACK', {
-						type: 'error',
-						message: 'Something Went Wrong',
-					})
+				return result.data
+			} catch (error) {
+				commit('IS_GETTING_NEXT_QUESTION_FEEDBACK', {
+					type: 'error',
+					message: 'Something Went Wrong',
+				})
 
-					reject(error)
-				} finally {
-					commit('SET_IS_GETTING_NEXT_QUESTION', false)
-				}
-			})
+				commit('SET_IS_GETTING_NEXT_QUESTION', false)
+
+				captureException(error)
+			}
 		},
-		endContest({ commit }, contestId) {
-			return new Promise(async function (resolve, reject) {
-				commit('SET_IS_ENDING_CONTEST', true)
+		async endContest({ commit }, contestId) {
+			commit('SET_IS_ENDING_CONTEST', true)
 
-				try {
-					const idToken = await getIdToken()
-					const result = await endContest(idToken, contestId)
+			try {
+				const idToken = await getIdToken()
+				const result = await endContest(idToken, contestId)
 
-					commit('SET_IS_ENDING_CONTEST_FEEDBACK', {
-						type: 'success',
-						message: 'Contest Ended',
-					})
+				commit('SET_IS_ENDING_CONTEST_FEEDBACK', {
+					type: 'success',
+					message: 'Contest Ended',
+				})
 
-					resolve(result.data)
-				} catch (error) {
-					commit('SET_IS_ENDING_CONTEST_FEEDBACK', {
-						type: 'error',
-						message: 'Something Went Wrong',
-					})
+				commit('SET_IS_ENDING_CONTEST', false)
 
-					reject(error)
-				} finally {
-					commit('SET_IS_ENDING_CONTEST', false)
-				}
-			})
+				return result.data
+			} catch (error) {
+				commit('SET_IS_ENDING_CONTEST_FEEDBACK', {
+					type: 'error',
+					message: 'Something Went Wrong',
+				})
+
+				commit('SET_IS_ENDING_CONTEST', false)
+
+				captureException(error)
+			}
 		},
 	},
 }

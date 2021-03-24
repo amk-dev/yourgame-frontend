@@ -37,7 +37,6 @@
 </template>
 
 <script>
-	/* eslint-disable */
 	export default {
 		name: 'HeroMedia',
 		components: {},
@@ -51,8 +50,6 @@
 				this.showQuiz = true
 			},
 			animationEnd: function (data) {
-				console.log(data)
-
 				if (data.animationName == 'fadeOut') {
 					this.showQuiz = false
 					this.$refs.heroDemo.style.minHeight = 0
@@ -61,7 +58,6 @@
 		},
 		mounted() {
 			this.$refs.heroDemo.style.minHeight = this.$refs.heroDemo.offsetHeight
-			console.log(this.$refs.heroDemo.style)
 		},
 	}
 </script>

@@ -52,7 +52,6 @@
 	import GameCardFooter from './GameCardFooter.vue'
 	import ConfirmJoiningCard from './ConfirmJoiningCard.vue'
 
-	/* eslint-disable no-console */
 	export default {
 		name: 'GameCard',
 		props: ['type', 'contest'],

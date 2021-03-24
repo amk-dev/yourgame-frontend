@@ -89,7 +89,6 @@
 </template>
 
 <script>
-	/* eslint-disable no-console */
 	import Navbar from './../components/Navigation/NavBar.vue'
 	import GameCard from './../components/Generic/GameCard/GameCard.vue'
 	import Winnings from '../components/Contests/Winnings.vue'

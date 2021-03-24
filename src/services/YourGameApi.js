@@ -1,4 +1,3 @@
-/* eslint-disable */
 import axios from 'axios'
 
 let baseURL = 'http://localhost:3000/'
@@ -10,29 +9,6 @@ if (process.env.VUE_APP_YOURGAME_API_URL) {
 const api = axios.create({
 	baseURL: baseURL,
 })
-
-export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
-	try {
-		let result = await api.post(
-			'/auth/authcode',
-			{
-				code: googleAuthCode,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${firebaseIdToken}`,
-				},
-			}
-		)
-		console.log(result)
-		return result.data
-	} catch (error) {
-		console.log(error)
-		return {
-			error: true,
-		}
-	}
-}
 
 export async function createContest(
 	firebaseIdToken,
@@ -63,7 +39,7 @@ export async function getMyContests(firebaseIdToken) {
 	return result.data
 }
 
-export function getAllContests(firebaseIdToken) {
+export function getAllContests() {
 	return api.get('/contest/all')
 }
 

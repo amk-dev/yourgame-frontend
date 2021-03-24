@@ -280,15 +280,10 @@
 
 				this.confirmDialgoueVisible = false
 
-				this.$store
-					.dispatch('createNewContest', {
-						youtubeVideoId: this.newContest.youtubeVideoId,
-						contestDateAndTimeTimestamp,
-					})
-					.catch((error) => {
-						// eslint-disable-next-line no-console
-						console.log(error)
-					})
+				this.$store.dispatch('createNewContest', {
+					youtubeVideoId: this.newContest.youtubeVideoId,
+					contestDateAndTimeTimestamp,
+				})
 			},
 		},
 		beforeDestroy() {

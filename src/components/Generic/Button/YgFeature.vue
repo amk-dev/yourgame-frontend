@@ -10,7 +10,6 @@
 </template>
 
 <script>
-	/* eslint-disable no-console */
 	export default {
 		name: 'YgFuture',
 		props: ['icon', 'text', 'iconColor', 'backgroundColor'],
