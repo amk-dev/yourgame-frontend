@@ -5,7 +5,7 @@
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
-		"lint": "vue-cli-service lint -o eslint-report",
+		"lint": "vue-cli-service lint",
 		"check-format": "npm run prettier -- --list-different",
 		"format": "npm run prettier -- --write",
 		"prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|vue)\"",
