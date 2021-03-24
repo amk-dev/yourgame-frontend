@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { auth, authProviders } from '@/config.js'
 
 import { addRefferal, isCreator } from '../../services/YourGameApi.js'
@@ -47,7 +46,6 @@ export default {
 		auth({ commit }) {
 			return new Promise((resolve) => {
 				auth.onAuthStateChanged(function (user) {
-					console.log('auth state changed')
 					commit('SET_USER', user)
 
 					resolve()
@@ -112,7 +110,6 @@ export default {
 				await auth.signOut()
 				return true
 			} catch (e) {
-				console.log(e)
 				return false
 			}
 		},

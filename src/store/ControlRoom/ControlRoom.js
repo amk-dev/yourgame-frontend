@@ -138,7 +138,6 @@ export default {
 
 				return result.data
 			} catch (error) {
-				// eslint-disable-next-line
 				commit('SET_IS_STARTING_CONTEST_FEEDBACK', {
 					type: 'error',
 					message: 'Something Went Wrong',

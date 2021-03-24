@@ -10,29 +10,6 @@ const api = axios.create({
 	baseURL: baseURL,
 })
 
-export async function sendAuthCode(firebaseIdToken, googleAuthCode) {
-	try {
-		let result = await api.post(
-			'/auth/authcode',
-			{
-				code: googleAuthCode,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${firebaseIdToken}`,
-				},
-			}
-		)
-		return result.data
-	} catch (error) {
-		// eslint-disable-next-line
-		console.log(error)
-		return {
-			error: true,
-		}
-	}
-}
-
 export async function createContest(
 	firebaseIdToken,
 	youtubeVideoId,

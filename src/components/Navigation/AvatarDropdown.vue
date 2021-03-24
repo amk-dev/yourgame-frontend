@@ -51,8 +51,7 @@
 </template>
 
 <script>
-	import Router from 'vue-router'
-	const { isNavigationFailure, NavigationFailureType } = Router
+	import { captureException } from '@sentry/browser'
 
 	export default {
 		name: 'AvatarDropdown',
@@ -61,15 +60,7 @@
 			hideDropdownAndGoToRoute(route) {
 				this.toggleDropdown()
 				this.$router.push(route).catch((error) => {
-					if (
-						isNavigationFailure(
-							error,
-							NavigationFailureType.duplicated
-						)
-					) {
-						// eslint-disable-next-line
-						console.log('Navigation Duplicated')
-					}
+					captureException(error)
 				})
 			},
 
@@ -79,15 +70,7 @@
 			async signout() {
 				await this.$store.dispatch('signout')
 				this.$router.push('/').catch((error) => {
-					if (
-						isNavigationFailure(
-							error,
-							NavigationFailureType.duplicated
-						)
-					) {
-						// eslint-disable-next-line
-						console.log('Navigation Duplicated')
-					}
+					captureException(error)
 				})
 			},
 		},

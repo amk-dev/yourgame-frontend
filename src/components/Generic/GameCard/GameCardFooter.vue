@@ -70,9 +70,6 @@
 				if (this.isAuthenticated) {
 					this.$emit('showConfirmJoiningCard')
 				} else {
-					// eslint-disable-next-line no-console
-					console.log(this.$route)
-
 					this.$router.push({
 						path: '/signin',
 						query: {
