@@ -1,14 +1,20 @@
 <template>
 	<div class="skelton">
-		<div class="container yg-container">
-			<div class="wrapper">
-				<div class="columns is-gapless is-centered is-marginless">
-					<div class="column is-10">
-						<nav-bar />
+		<div class="yg-container">
+			<div class="columns is-gapless is-marginless is-centered">
+				<div class="column is-10">
+					<div class="wrapper">
+						<div
+							class="columns is-gapless is-centered is-marginless"
+						>
+							<div class="column is-10">
+								<nav-bar />
+							</div>
+						</div>
+
+						<slot></slot>
 					</div>
 				</div>
-
-				<slot></slot>
 			</div>
 		</div>
 
@@ -40,5 +46,13 @@
 		position: relative;
 		justify-content: flex-start;
 		padding: 0 24px;
+	}
+	.yg-container {
+		flex-grow: 1;
+	}
+	.skelton {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
 	}
 </style>

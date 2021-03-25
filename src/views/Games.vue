@@ -11,6 +11,12 @@
 				<div class="column is-5">
 					<div class="all-games">
 						<div class="all-games-section">
+							<referral-header
+								v-if="isAllGames"
+								context="all-games"
+								class="mb-5"
+							></referral-header>
+
 							<contest-list
 								v-if="haveContests"
 								:contests="contests"
@@ -54,6 +60,7 @@
 	import ContestList from '../components/Contests/ContestList.vue'
 	import ContestEmptyState from '../components/Contests/ContestEmptyState.vue'
 	import NewContest from './NewContest.vue'
+	import ReferralHeader from '../components/ReferralHeader.vue'
 
 	export default {
 		name: 'Games',
@@ -69,8 +76,12 @@
 			ContestList,
 			ContestEmptyState,
 			NewContest,
+			ReferralHeader,
 		},
 		computed: {
+			isAllGames() {
+				return this.context == 'all-games'
+			},
 			haveContests() {
 				return this.contests ? !!this.contests.length : false
 			},

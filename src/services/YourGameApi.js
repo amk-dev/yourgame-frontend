@@ -162,3 +162,11 @@ export async function addRefferal(firebaseIdToken, refferalId) {
 		}
 	)
 }
+
+export async function getReferrals(firebaseIdToken) {
+	return api.get('/user/referrals', {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}
