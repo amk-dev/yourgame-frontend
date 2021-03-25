@@ -1,8 +1,8 @@
 <template>
-	<skelton>
+	<skelton :showFooter="false">
 		<div class="columns is-gapless is-centered is-marginless">
 			<div class="column is-7">
-				<div class="contest-wrapper mt-6 mb-4">
+				<div class="contest-wrapper mt-5 mb-4">
 					<game-card
 						v-if="activeContest"
 						type="contest-header"

@@ -1,18 +1,18 @@
 <template>
-	<skelton>
+	<skelton :showFooter="false">
 		<div class="columns is-gapless is-centered">
 			<div class="column is-5 mb-5">
 				<div class="referrals">
 					<referral-header></referral-header>
 					<referral-status
-						class="has-narrow-margin-mobile mt-3"
+						class="has-narrow-margin-mobile mt-4"
 					></referral-status>
 					<referral-url-box
-						class="has-narrow-margin-mobile mt-3"
+						class="has-narrow-margin-mobile mt-4"
 					></referral-url-box>
 					<referred-people
 						:referrals="referrals"
-						class="has-narrow-margin-mobile mt-3"
+						class="has-narrow-margin-mobile mt-4"
 					></referred-people>
 				</div>
 			</div>
@@ -41,13 +41,7 @@
 </script>
 
 <style>
-	.referrals {
-		margin-top: 48px;
-	}
 	@media screen and (max-width: 786px) {
-		.referrals {
-			margin-top: 0px !important;
-		}
 		.has-narrow-margin-mobile {
 			margin-top: 12px !important;
 		}

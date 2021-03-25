@@ -1,34 +1,26 @@
 <template>
-	<div class="container">
-		<div class="wrapper">
-			<div class="columns is-gapless is-centered is-marginless">
-				<div class="column is-10">
-					<navbar></navbar>
-				</div>
-			</div>
-
-			<div class="columns is-gapless is-centered is-marginless">
-				<div class="column is-5">
-					<div class="dashboard">
-						<div class="dashboard-section">
-							<your-funds></your-funds>
-						</div>
+	<skelton :showFooter="false">
+		<div class="columns is-gapless is-centered is-marginless">
+			<div class="column is-5">
+				<div class="dashboard">
+					<div class="dashboard-section">
+						<your-funds></your-funds>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</skelton>
 </template>
 
 <script>
-	import Navbar from '../components/Navigation/NavBar.vue'
+	import Skelton from '../components/Skelton.vue'
 	import YourFunds from '../components/YourFunds.vue'
 
 	export default {
 		name: 'Home',
 		components: {
-			Navbar,
 			YourFunds,
+			Skelton,
 		},
 	}
 </script>
