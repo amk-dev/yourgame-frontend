@@ -7,6 +7,7 @@ const Games = () => import('./views/Games.vue')
 const YourMoney = () => import('./views/YourMoney')
 const GameControlRoom = () => import('./views/GameControlRoom.vue')
 const Play = () => import('./views/Play.vue')
+const Referrals = () => import('./views/Referrals.vue')
 
 const PrivacyPolicy = () => import('./views/PrivacyPolicy.vue')
 const TermsOfService = () => import('./views/TermsOfService.vue')
@@ -81,6 +82,15 @@ let router = new Router({
 			path: '/yourmoney',
 			name: 'yourmoney',
 			component: YourMoney,
+			meta: {
+				private: true,
+			},
+		},
+		{
+			path: '/referrals',
+			name: 'Referrals',
+			component: Referrals,
+			props: true,
 			meta: {
 				private: true,
 			},
@@ -261,6 +271,18 @@ router.beforeEach(async (to, from, next) => {
 			next()
 		} catch (error) {
 			captureException(error)
+			return next('/something-went-wrong')
+		}
+	}
+
+	if (to.name == 'Referrals') {
+		try {
+			let referrals = await store.dispatch('getReferrals')
+			// eslint-disable-next-line
+			console.log(referrals)
+			to.params.referrals = referrals
+			next()
+		} catch (error) {
 			return next('/something-went-wrong')
 		}
 	}

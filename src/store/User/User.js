@@ -1,13 +1,19 @@
 import { auth, authProviders } from '@/config.js'
 
-import { addRefferal, isCreator } from '../../services/YourGameApi.js'
+import {
+	addRefferal,
+	getReferrals,
+	isCreator,
+} from '../../services/YourGameApi.js'
 import { getIdToken } from '../../services/FirebaseAuth.js'
 import { captureException } from '@sentry/browser'
 
 export default {
 	state: {
 		user: null,
+		referrals: null,
 		isSigningIn: false,
+		isGettingReferrals: false,
 		signInError: null,
 	},
 
@@ -30,6 +36,12 @@ export default {
 		signInError(state) {
 			return state.signInError
 		},
+		referralUrl(state) {
+			return `http://localhost:8080?refid=${state.user.uid}`
+		},
+		referrals(state) {
+			return state.referrals
+		},
 	},
 
 	mutations: {
@@ -41,6 +53,12 @@ export default {
 		},
 		SET_SIGNIN_ERROR(state, error) {
 			state.signInError = error
+		},
+		IS_GETTING_REFERRALS(state, isGettingReferrals) {
+			state.isGettingReferrals = isGettingReferrals
+		},
+		SET_REFERRALS(state, referrals) {
+			state.referrals = referrals
 		},
 	},
 	actions: {
@@ -123,6 +141,25 @@ export default {
 				return result.data.success
 			} catch (error) {
 				captureException(error)
+			}
+		},
+		async getReferrals({ commit }) {
+			try {
+				commit('IS_GETTING_REFERRALS', true)
+
+				const idToken = await getIdToken()
+				const result = await getReferrals(idToken)
+
+				const referrals = result.data
+
+				commit('SET_REFERRALS', referrals)
+				commit('IS_GETTING_REFERRALS', false)
+
+				return referrals
+			} catch (error) {
+				captureException(error)
+				commit('IS_GETTING_REFERRALS', false)
+				throw error
 			}
 		},
 	},
