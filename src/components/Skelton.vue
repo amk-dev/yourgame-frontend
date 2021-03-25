@@ -18,7 +18,7 @@
 			</div>
 		</div>
 
-		<yg-footer class="mt-6"></yg-footer>
+		<yg-footer v-if="showFooter" class="mt-6"></yg-footer>
 	</div>
 </template>
 
@@ -28,6 +28,11 @@
 
 	export default {
 		name: 'Skelton',
+		props: {
+			showFooter: {
+				default: true,
+			},
+		},
 		components: {
 			NavBar,
 			YgFooter,
@@ -51,7 +56,7 @@
 		flex-grow: 1;
 	}
 	.skelton {
-		display: flex;
+		/* display: flex; */
 		flex-direction: column;
 		min-height: 100vh;
 	}

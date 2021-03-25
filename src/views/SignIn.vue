@@ -1,14 +1,9 @@
 <template>
-	<div class="container signin-container">
-		<div class="wrapper">
-			<div class="columns is-gapless is-centered is-marginless">
-				<div class="column is-10">
-					<navbar></navbar>
-				</div>
-			</div>
+	<div class="signin">
+		<div class="container">
 			<div class="columns is-marginless is-centered sign-in-columns">
 				<div class="column is-3">
-					<!-- <brand class="yourgame-brand"></brand> -->
+					<brand class="yourgame-brand"></brand>
 					<h2 class="sign-in-text">
 						Sign In With Your Google Account To Join Contests And
 						Start Winning Money
@@ -42,7 +37,7 @@
 </template>
 
 <script>
-	import Navbar from '../components/Navigation/NavBar.vue'
+	import Brand from '../components/Navigation/Brand.vue'
 	import YgFeature from '../components/Generic/Button/YgFeature.vue'
 	import GoogleSignInButton from '../components/Generic/Button/GoogleSignInButton.vue'
 	import FeedbackBox from '../components/Generic/FeedbackBox/FeedbackBox.vue'
@@ -52,9 +47,9 @@
 		name: 'Home',
 		components: {
 			YgFeature,
-			Navbar,
 			GoogleSignInButton,
 			FeedbackBox,
+			Brand,
 		},
 		data: () => {
 			return {
@@ -98,6 +93,12 @@
 </script>
 
 <style>
+	.signin {
+		display: flex;
+		min-height: 100vh;
+		align-items: center;
+		margin-top: -56px;
+	}
 	.yg-box {
 		padding: 24px;
 		background: #fff;
@@ -147,5 +148,9 @@
 	}
 
 	@media screen and (max-width: 768px) {
+		.signin {
+			align-items: flex-start;
+			margin-top: 0;
+		}
 	}
 </style>
