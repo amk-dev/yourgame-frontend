@@ -42,6 +42,13 @@
 					Your Money
 				</div>
 
+				<div
+					class="yg-dropdown-link mt-2"
+					@click="hideDropdownAndGoToRoute('/referrals')"
+				>
+					Referrals
+				</div>
+
 				<div class="yg-dropdown-link mt-2" @click="signout">
 					Signout
 				</div>
