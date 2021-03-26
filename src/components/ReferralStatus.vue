@@ -5,6 +5,10 @@
 			Share Your Referral Url with your friends. You get 50 Rs as bonus
 			for every 3 friends you refer. you can get a maximum of 150 Rs.
 		</p>
+		<p class="referral-description mt-2">
+			Referral Bonus Valid For First 15 Games or 1 Month Since YourGame
+			Launch
+		</p>
 	</div>
 </template>
 

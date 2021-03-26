@@ -6,31 +6,33 @@
 			<div class="your-fund-bonus">
 				<h3 class="your-fund-section-title">Bonuses</h3>
 				<div class="your-fund-section-content mt-2">
-					0 <font-awesome-icon icon="rupee-sign"></font-awesome-icon>
+					{{ bonus }}
+					<font-awesome-icon icon="rupee-sign"></font-awesome-icon>
 				</div>
 			</div>
 			<div class="your-fund-winnings ml-4">
 				<h3 class="your-fund-section-title">Winnings</h3>
 				<div class="your-fund-section-content mt-2">
-					0 <font-awesome-icon icon="rupee-sign"></font-awesome-icon>
+					{{ winnings }}
+					<font-awesome-icon icon="rupee-sign"></font-awesome-icon>
 				</div>
 			</div>
 		</div>
 
-		<primary-button class="add-funds-button mt-4">Add Money</primary-button>
+		<!-- <primary-button class="add-funds-button mt-4">Add Money</primary-button> -->
 	</white-box>
 </template>
 
 <script>
 	import WhiteBox from './../components/Generic/WhiteBox/WhiteBox.vue'
-	import PrimaryButton from './../components/Generic/Button/PrimaryButton.vue'
+	// import PrimaryButton from './../components/Generic/Button/PrimaryButton.vue'
 
 	export default {
 		name: 'YourFunds',
 		props: ['bonus', 'winnings'],
 		components: {
 			WhiteBox,
-			PrimaryButton,
+			// PrimaryButton,
 		},
 	}
 </script>

@@ -170,3 +170,27 @@ export async function getReferrals(firebaseIdToken) {
 		},
 	})
 }
+
+export async function getBonusAndWinnings(firebaseIdToken) {
+	return api.get('/user/money', {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}
+
+export async function getTransactionHistory(firebaseIdToken) {
+	return api.get('/user/transactions', {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}
+
+export async function getTotalReferralAmount(firebaseIdToken) {
+	return api.get('/user/money/referral', {
+		headers: {
+			Authorization: `Bearer ${firebaseIdToken}`,
+		},
+	})
+}

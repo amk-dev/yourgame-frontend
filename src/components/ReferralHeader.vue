@@ -1,8 +1,10 @@
 <template>
 	<div class="referral-header">
 		<div class="referral-header-text">
-			Its more fun with friends. Refer your friends and get upto 150 Rs to
-			play.
+			<p>
+				Its more fun with friends. Refer your friends and get upto 150
+				Rs to play.
+			</p>
 		</div>
 
 		<div
@@ -41,6 +43,12 @@
 		font-family: 'Lato', sans-serif;
 		font-weight: 700;
 		line-height: 130%;
+	}
+
+	.validity-text {
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 100%;
 	}
 
 	@media screen and (max-width: 786px) {
