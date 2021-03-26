@@ -2,7 +2,9 @@ import { auth, authProviders } from '@/config.js'
 
 import {
 	addRefferal,
+	getBonusAndWinnings,
 	getReferrals,
+	getTransactionHistory,
 	isCreator,
 } from '../../services/YourGameApi.js'
 import { getIdToken } from '../../services/FirebaseAuth.js'
@@ -15,6 +17,11 @@ export default {
 		isSigningIn: false,
 		isGettingReferrals: false,
 		signInError: null,
+		winnings: 0,
+		bonus: 0,
+		isGettingBonusAndWinnings: false,
+		isGettingTransactionHistory: false,
+		transactionHistory: null,
 	},
 
 	getters: {
@@ -59,6 +66,21 @@ export default {
 		},
 		SET_REFERRALS(state, referrals) {
 			state.referrals = referrals
+		},
+		SET_IS_GETTING_BONUS_AND_WINNINGS(state, isGettingBonusAndWinnings) {
+			state.isGettingBonusAndWinnings = isGettingBonusAndWinnings
+		},
+		SET_BONUS(state, bonus) {
+			state.bonus = bonus
+		},
+		SET_WINNINGS(state, winnings) {
+			state.winnings = winnings
+		},
+		IS_GETTING_TRANSACTIONS(state, isGettingTransactionHistory) {
+			state.isGettingTransactionHistory = isGettingTransactionHistory
+		},
+		SET_TRANSACTION_HISTORY(state, transactionHistory) {
+			state.transactionHistory = transactionHistory
 		},
 	},
 	actions: {
@@ -159,6 +181,47 @@ export default {
 			} catch (error) {
 				captureException(error)
 				commit('IS_GETTING_REFERRALS', false)
+				throw error
+			}
+		},
+		async getBonusAndWinnings({ commit }) {
+			try {
+				commit('SET_IS_GETTING_BONUS_AND_WINNINGS', true)
+
+				const idToken = await getIdToken()
+				const result = await getBonusAndWinnings(idToken)
+
+				const bonusAndWinnings = result.data
+
+				commit('SET_BONUS', bonusAndWinnings.bonus)
+				commit('SET_WINNINGS', bonusAndWinnings.bonusAndWinnings)
+
+				commit('SET_IS_GETTING_BONUS_AND_WINNINGS', false)
+
+				return bonusAndWinnings
+			} catch (error) {
+				captureException(error)
+				commit('SET_IS_GETTING_BONUS_AND_WINNINGS', false)
+
+				throw error
+			}
+		},
+		async getTransactionHistory({ commit }) {
+			try {
+				commit('IS_GETTING_TRANSACTIONS', true)
+
+				let idToken = await getIdToken()
+				let result = await getTransactionHistory(idToken)
+
+				const transactionHistory = result.data
+
+				commit('SET_TRANSACTION_HISTORY', transactionHistory)
+				commit('IS_GETTING_TRANSACTIONS', false)
+
+				return transactionHistory
+			} catch (error) {
+				captureException(error)
+				commit('IS_GETTING_TRANSACTIONS', false)
 				throw error
 			}
 		},

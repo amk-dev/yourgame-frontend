@@ -2,9 +2,16 @@
 	<skelton :showFooter="false">
 		<div class="columns is-gapless is-centered is-marginless">
 			<div class="column is-5">
-				<div class="dashboard">
-					<div class="dashboard-section">
-						<your-funds></your-funds>
+				<div class="yourmoney">
+					<div class="your-money-section">
+						<your-funds
+							:bonus="bonus"
+							:winnings="winnings"
+						></your-funds>
+
+						<transaction-history
+							:transactions="transactionHistory"
+						></transaction-history>
 					</div>
 				</div>
 			</div>
@@ -15,12 +22,15 @@
 <script>
 	import Skelton from '../components/Skelton.vue'
 	import YourFunds from '../components/YourFunds.vue'
+	import TransactionHistory from '../components/TransactionHistory.vue'
 
 	export default {
-		name: 'Home',
+		name: 'YourMoney',
+		props: ['bonus', 'winnings', 'transactionHistory'],
 		components: {
 			YourFunds,
 			Skelton,
+			TransactionHistory,
 		},
 	}
 </script>
@@ -29,13 +39,5 @@
 	.wrapper {
 		justify-content: flex-start;
 		padding: 0px 24px;
-	}
-	.dashboard {
-		margin-top: 48px;
-	}
-	@media screen and (max-width: 768px) {
-		.dashboard {
-			margin-top: 0 !important;
-		}
 	}
 </style>

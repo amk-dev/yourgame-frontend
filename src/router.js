@@ -80,8 +80,9 @@ let router = new Router({
 		},
 		{
 			path: '/yourmoney',
-			name: 'yourmoney',
+			name: 'YourMoney',
 			component: YourMoney,
+			props: true,
 			meta: {
 				private: true,
 			},
@@ -268,7 +269,7 @@ router.beforeEach(async (to, from, next) => {
 				to.params.showNewContestForm = true
 			}
 
-			next()
+			return next()
 		} catch (error) {
 			captureException(error)
 			return next('/something-went-wrong')
@@ -278,10 +279,28 @@ router.beforeEach(async (to, from, next) => {
 	if (to.name == 'Referrals') {
 		try {
 			let referrals = await store.dispatch('getReferrals')
-			// eslint-disable-next-line
-			console.log(referrals)
 			to.params.referrals = referrals
-			next()
+			return next()
+		} catch (error) {
+			return next('/something-went-wrong')
+		}
+	}
+
+	if (to.name == 'YourMoney') {
+		try {
+			let requiredPromises = [
+				store.dispatch('getBonusAndWinnings'),
+				store.dispatch('getTransactionHistory'),
+			]
+
+			const [yourMoney, transactionHistory] = await Promise.all(
+				requiredPromises
+			)
+			to.params.bonus = yourMoney.bonus
+			to.params.winnings = yourMoney.winnings
+			to.params.transactionHistory = transactionHistory
+
+			return next()
 		} catch (error) {
 			return next('/something-went-wrong')
 		}
