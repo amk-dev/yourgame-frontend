@@ -56,6 +56,13 @@
 					success: 'Ok',
 				}
 
+				if (
+					this.joiningContestFeedback &&
+					this.joiningContestFeedback.code == 'not-enough-balance'
+				) {
+					return 'Refer Now'
+				}
+
 				return this.joiningContestFeedback
 					? buttonTexts[this.joiningContestFeedback.type]
 					: 'Yes'
@@ -72,7 +79,9 @@
 				this.$emit('hideConfirmJoiningCard')
 			},
 			joinContest() {
-				if (this.confirmButtonText != 'Ok') {
+				if (this.confirmButtonText == 'Refer Now') {
+					this.$router.push('/referrals')
+				} else if (this.confirmButtonText != 'Ok') {
 					this.$store.dispatch('joinContestWithId', this.contestId)
 				} else {
 					this.hideConfirmJoiningCard()

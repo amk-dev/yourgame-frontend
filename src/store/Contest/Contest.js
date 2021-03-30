@@ -256,10 +256,23 @@ export const actions = {
 
 			return result.data
 		} catch (error) {
-			commit('SET_JOINING_CONTEST_FEEDBACK', {
+			let errorFeedback = {
 				type: 'error',
 				message: 'Something Went Wrong. Please Try Again',
-			})
+			}
+
+			if (error.response) {
+				if (error.response.data.message == 'not-enough-balance') {
+					errorFeedback = {
+						type: 'error',
+						code: 'not-enough-balance',
+						message:
+							'You do not have enough balance to join. Refer your friends to play for free',
+					}
+				}
+			}
+
+			commit('SET_JOINING_CONTEST_FEEDBACK', errorFeedback)
 
 			commit('SET_IS_JOINING_CONTEST', false)
 
