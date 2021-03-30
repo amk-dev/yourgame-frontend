@@ -13,11 +13,11 @@
 				<leaderboard-item
 					:type="type"
 					v-for="leaderboardentry in leaderboard"
-					:name="leaderboardentry.user.displayName"
+					:name="leaderboardentry.displayName"
 					:key="leaderboardentry.uid"
-					:points="leaderboardentry.totalPoints"
-					:time="leaderboardentry.totalTimeTaken"
-					:profilePicture="leaderboardentry.user.picture"
+					:points="leaderboardentry.points"
+					:time="leaderboardentry.timeTaken"
+					:profilePicture="leaderboardentry.picture"
 				></leaderboard-item>
 			</ul>
 
