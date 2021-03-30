@@ -17,4 +17,7 @@
 	body {
 		background: #f2f6fc;
 	}
+	#nprogress .bar {
+		height: 4px !important;
+	}
 </style>
