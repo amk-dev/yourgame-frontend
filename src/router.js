@@ -218,8 +218,6 @@ router.beforeEach(async (to, from, next) => {
 				})
 			}
 		} catch (error) {
-			captureException(error)
-
 			return next({
 				name: 'SomethingWentWrong',
 			})
@@ -234,7 +232,6 @@ router.beforeEach(async (to, from, next) => {
 			to.params.context = 'all-games'
 			return next()
 		} catch (error) {
-			captureException(error)
 			return next('/something-went-wrong')
 		}
 	}
@@ -250,7 +247,6 @@ router.beforeEach(async (to, from, next) => {
 
 			return next()
 		} catch (error) {
-			captureException(error)
 			return next('/something-went-wrong')
 		}
 	}
@@ -271,7 +267,6 @@ router.beforeEach(async (to, from, next) => {
 
 			return next()
 		} catch (error) {
-			captureException(error)
 			return next('/something-went-wrong')
 		}
 	}

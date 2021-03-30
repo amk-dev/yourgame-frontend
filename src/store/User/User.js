@@ -138,13 +138,19 @@ export default {
 						}
 
 						captureException(error)
+						throw error
 					})
 			})
 		},
 		async isCreator() {
-			let idToken = await getIdToken()
-			let result = await isCreator(idToken)
-			return result.data.isCreator
+			try {
+				let idToken = await getIdToken()
+				let result = await isCreator(idToken)
+				return result.data.isCreator
+			} catch (error) {
+				captureException(error)
+				throw error
+			}
 		},
 		async signout() {
 			try {
