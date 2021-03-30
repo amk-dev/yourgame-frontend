@@ -185,6 +185,7 @@ export const actions = {
 		} catch (error) {
 			commit('SET_IS_POPULATING_ALL_CONTESTS', false)
 			captureException(error)
+			throw error
 		}
 	},
 	async populateJoinedContests({ commit }) {
@@ -200,6 +201,7 @@ export const actions = {
 		} catch (error) {
 			commit('SET_IS_POPULATING_JOINED_CONTESTS', false)
 			captureException(error)
+			throw error
 		}
 	},
 	async populateCreatedContests({ commit }) {
@@ -215,6 +217,7 @@ export const actions = {
 		} catch (error) {
 			commit('SET_IS_POPULATING_CREATED_CONTESTS', false)
 			captureException(error)
+			throw error
 		}
 	},
 	async getSingleContest({ commit, getters }, contestId) {
