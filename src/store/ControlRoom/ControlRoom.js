@@ -191,6 +191,8 @@ export default {
 				commit('RESET_REMAINING_TIME')
 				dispatch('startQuestionTimer', contestId)
 
+				commit('`SET_IS_GETTING_NEXT_QUESTION`', false)
+
 				return result.data
 			} catch (error) {
 				commit('IS_GETTING_NEXT_QUESTION_FEEDBACK', {
