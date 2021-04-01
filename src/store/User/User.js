@@ -50,7 +50,7 @@ export default {
 				baseUrl = process.env.VUE_APP_YOURGAME_URL
 			}
 
-			return `${baseUrl}?refid=${state.user.uid}`
+			return `${baseUrl}?refId=${state.user.uid}`
 		},
 		referrals(state) {
 			return state.referrals
