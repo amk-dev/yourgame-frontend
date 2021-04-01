@@ -97,7 +97,6 @@
 		display: flex;
 		min-height: 100vh;
 		align-items: center;
-		margin-top: -56px;
 	}
 	.yg-box {
 		padding: 24px;

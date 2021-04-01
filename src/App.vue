@@ -14,9 +14,6 @@
 		min-height: 100vh;
 		font-family: 'Lato', sans-serif !important;
 	}
-	body {
-		background: #f2f6fc;
-	}
 	#nprogress .bar {
 		height: 4px !important;
 	}
