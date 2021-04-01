@@ -90,10 +90,22 @@ export default {
 				})
 			})
 		},
-		signinWithGoogle() {
+		async signinWithGoogle({ commit }) {
 			let provider = new authProviders.GoogleAuthProvider()
 
-			auth.signInWithRedirect(provider)
+			try {
+				await auth.signInWithRedirect(provider)
+			} catch (error) {
+				if (error.code == 'auth/network-request-failed') {
+					commit('SET_SIGNIN_ERROR', {
+						message:
+							'We cant reach our servers. Please check your internet connection',
+						type: 'error',
+					})
+				}
+
+				captureException(error)
+			}
 		},
 		checkForSignInErrors({ commit, dispatch }) {
 			return new Promise((resolve) => {
