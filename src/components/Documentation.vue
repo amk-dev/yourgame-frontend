@@ -1,7 +1,7 @@
 <template>
 	<skelton>
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-6 mt-5 mb-5">
+			<div class="column mt-5 mb-5">
 				<div class="documentation-content">
 					<slot></slot>
 				</div>
