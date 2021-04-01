@@ -55,6 +55,9 @@ export default {
 		SET_USER(state, user) {
 			state.user = user
 		},
+		SET_IS_SIGNING_IN(state, isSigningIn) {
+			state.isSigningIn = isSigningIn
+		},
 		SET_SIGNIN_ERROR(state, error) {
 			state.signInError = error
 		},
@@ -92,6 +95,8 @@ export default {
 		},
 		async signinWithGoogle({ commit }) {
 			let provider = new authProviders.GoogleAuthProvider()
+
+			commit('SET_IS_SIGNING_IN', true)
 
 			try {
 				await auth.signInWithRedirect(provider)
