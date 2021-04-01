@@ -56,6 +56,7 @@ export default {
 					}
 				}
 
+				commit('IS_ANSWERING_QUESTION', false)
 				captureException(error)
 			}
 		},

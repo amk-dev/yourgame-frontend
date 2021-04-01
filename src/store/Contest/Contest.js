@@ -295,6 +295,8 @@ export const actions = {
 				message: 'Leaderboard Fetched Succesfully',
 			})
 
+			commit('SET_IS_GETTING_LEADERBOARD', false)
+
 			return result.data
 		} catch (error) {
 			commit('SET_IS_GETTING_LEADERBOARD', false)
