@@ -2,7 +2,7 @@
 	<div class="signin">
 		<div class="container">
 			<div class="columns is-marginless is-centered sign-in-columns">
-				<div class="column is-3">
+				<div class="column is-3-widescreen is-4-desktop is-5-tablet">
 					<brand class="yourgame-brand"></brand>
 					<h2 class="sign-in-text">
 						Sign In With Your Google Account To Join Contests And

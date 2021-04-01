@@ -1,7 +1,7 @@
 <template>
 	<skelton>
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-5 mb-5">
+			<div class="column is-6-fullhd is-7-widescreen mb-5">
 				<hero-content></hero-content>
 				<!-- <contest-list
 							title="Latest Games"
@@ -11,13 +11,13 @@
 		</div>
 
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-5 mt-5">
+			<div class="column is-6-fullhd is-7-widescreen mt-5">
 				<FAQ></FAQ>
 			</div>
 		</div>
 
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-7 mt-6">
+			<div class="column is-12-desktop is-12-tablet mt-6">
 				<bottom-cta></bottom-cta>
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 <template>
 	<skelton :showFooter="false">
 		<div class="columns is-gapless is-centered">
-			<div class="column is-5 mb-5">
+			<div class="column is-6-fullhd is-7-widescreen mb-5">
 				<div class="referrals">
 					<referral-header></referral-header>
 					<referral-status

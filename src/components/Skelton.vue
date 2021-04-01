@@ -2,12 +2,12 @@
 	<div class="skelton">
 		<div class="yg-container">
 			<div class="columns is-gapless is-marginless is-centered">
-				<div class="column is-10">
+				<div class="column is-10-tablet is-8-desktop">
 					<div class="wrapper">
 						<div
 							class="columns is-gapless is-centered is-marginless"
 						>
-							<div class="column is-10">
+							<div class="column is-12">
 								<nav-bar />
 							</div>
 						</div>

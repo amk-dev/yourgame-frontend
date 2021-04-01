@@ -1,7 +1,7 @@
 <template>
 	<skelton :showFooter="false">
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-5">
+			<div class="column is-6-fullhd is-7-widescreen">
 				<div class="all-games">
 					<div class="all-games-section">
 						<referral-header

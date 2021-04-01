@@ -1,7 +1,7 @@
 <template>
 	<skelton :showFooter="false">
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-7">
+			<div class="column is-10-fullhd is-10-widescreen">
 				<div class="contest-wrapper mt-5 mb-4">
 					<game-card
 						v-if="activeContest"
@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-7">
+			<div class="column is-10-fullhd is-10-widescreen">
 				<success-message
 					v-if="
 						activeContest.isJoined &&
@@ -56,7 +56,7 @@
 		</div>
 
 		<div class="columns is-gapless is-centered is-marginless">
-			<div class="column is-7">
+			<div class="column is-10-fullhd is-10-widescreen">
 				<div class="contest-page-body">
 					<div class="columns is-gapless is-marginless">
 						<div class="column is-4">
