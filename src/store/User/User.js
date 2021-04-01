@@ -44,7 +44,13 @@ export default {
 			return state.signInError
 		},
 		referralUrl(state) {
-			return `http://localhost:8080?refid=${state.user.uid}`
+			let baseUrl = 'http://localhost:8080'
+
+			if (process.env.VUE_APP_YOURGAME_URL) {
+				baseUrl = process.env.VUE_APP_YOURGAME_URL
+			}
+
+			return `${baseUrl}?refid=${state.user.uid}`
 		},
 		referrals(state) {
 			return state.referrals
