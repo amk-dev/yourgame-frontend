@@ -1712,7 +1712,7 @@
     "@sentry/types" "6.2.5"
     tslib "^1.9.3"
 
-"@sentry/vue@^6.2.3":
+"@sentry/vue@^6.2.5":
   version "6.2.5"
   resolved "https://registry.yarnpkg.com/@sentry/vue/-/vue-6.2.5.tgz#027293e7cbc744bc0f1d9ef62d9ed685c5251bee"
   integrity sha512-56R43jYVV11ECe7K1//0bmRkvfCI8gnQ5HAOxfNP6FStpe6Twi2zOr8K4Mc6WmvEj03rcIj0yE6H+0Tmn1o1xA==
