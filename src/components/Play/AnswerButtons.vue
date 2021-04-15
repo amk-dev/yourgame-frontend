@@ -83,6 +83,8 @@
 				})
 			},
 			emitHideOptions() {
+				// eslint-disable-next-line
+				console.log('clicked')
 				this.$emit('hideOptions')
 			},
 		},
