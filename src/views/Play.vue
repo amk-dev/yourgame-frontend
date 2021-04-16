@@ -58,6 +58,16 @@
 		computed: {
 			...mapGetters(['contestYoutubeLiveUrl']),
 		},
+		created() {
+			let vh = window.innerHeight * 0.01
+			document.documentElement.style.setProperty('--vh', `${vh}px`)
+			window.addEventListener('resize', () => {
+				// eslint-disable-next-line
+				console.log('firing')
+				let vh = window.innerHeight * 0.01
+				document.documentElement.style.setProperty('--vh', `${vh}px`)
+			})
+		},
 		methods: {
 			showOptions() {
 				this.optionsVisible = true
@@ -90,7 +100,7 @@
 
 	.play-wrapper,
 	.video-column {
-		height: 100vh;
+		height: calc(var(--vh, 1vh) * 100);
 	}
 
 	.video-column {
