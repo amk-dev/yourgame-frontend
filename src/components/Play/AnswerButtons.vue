@@ -1,7 +1,11 @@
 <template>
 	<div class="answer-buttons">
-		<div class="answer-buttons-header mb-3">
-			<h2 class="answer-buttons-text">Choose Your Answer</h2>
+		<div class="answer-buttons-header mb-4">
+			<font-awesome-icon
+				@click="emitHideOptions"
+				class="hide-answer-buttons-icon"
+				icon="times"
+			></font-awesome-icon>
 		</div>
 
 		<default-button
@@ -78,6 +82,11 @@
 					contestId: this.$route.params.contestId,
 				})
 			},
+			emitHideOptions() {
+				// eslint-disable-next-line
+				console.log('clicked')
+				this.$emit('hideOptions')
+			},
 		},
 		computed: {
 			...mapGetters(['notifications', 'isAnsweringQuestion']),
@@ -86,6 +95,9 @@
 </script>
 
 <style>
+	.answer-buttons-header {
+		text-align: right;
+	}
 	.answer-buttons {
 		background: #fff;
 		color: #000;
@@ -93,7 +105,8 @@
 		font-size: 18px;
 		height: 100%;
 		/* box-shadow: 0px 16px 16px rgba(0, 0, 0, 0.1); */
-		border-radius: 8px;
+		border-top-right-radius: 24px;
+		border-top-left-radius: 24px;
 		position: relative;
 	}
 	.answer-buttons .answer-buttons-text {
@@ -162,6 +175,10 @@
 	}
 	.from-down-move {
 		transition: transform 0.6s;
+	}
+
+	.hide-answer-buttons-icon {
+		cursor: pointer;
 	}
 
 	@media screen and (max-width: 786px) {
