@@ -11,6 +11,7 @@
 					class="is-rounded"
 					:src="referral.picture"
 					:alt="`${referral.displayName} profile image`"
+					referrerpolicy="no-referrer"
 				/>
 			</figure>
 			<h3 class="name">{{ referral.displayName }}</h3>

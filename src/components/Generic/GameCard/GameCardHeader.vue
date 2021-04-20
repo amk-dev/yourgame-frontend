@@ -13,7 +13,11 @@
 		<div class="hosted-by">
 			<span class="hosted-by-placeholder"> Hosted By </span>
 			<figure class="image is-24x24">
-				<img class="is-rounded" :src="hostPicture" />
+				<img
+					class="is-rounded"
+					:src="hostPicture"
+					referrerpolicy="no-referrer"
+				/>
 			</figure>
 			<span class="host-name">{{ hostName }}</span>
 		</div>
