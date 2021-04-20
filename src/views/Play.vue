@@ -15,7 +15,7 @@
 			<div class="show-options-button">
 				<primary-button
 					@click.native="showOptions"
-					class="is-fullwidth"
+					class="is-fullwidth play-answer-button"
 				>
 					Answer
 				</primary-button>
@@ -62,8 +62,6 @@
 			let vh = window.innerHeight * 0.01
 			document.documentElement.style.setProperty('--vh', `${vh}px`)
 			window.addEventListener('resize', () => {
-				// eslint-disable-next-line
-				console.log('firing')
 				let vh = window.innerHeight * 0.01
 				document.documentElement.style.setProperty('--vh', `${vh}px`)
 			})
@@ -76,12 +74,6 @@
 				this.optionsVisible = false
 			},
 		},
-		mounted() {
-			this.$store.dispatch(
-				'getSingleContest',
-				this.$route.params.contestId
-			)
-		},
 	}
 </script>
 
@@ -92,10 +84,6 @@
 		height: auto;
 		bottom: 0;
 		z-index: 999;
-	}
-
-	.play-wrapper {
-		background: rgba(0, 0, 0, 0.8);
 	}
 
 	.play-wrapper,
@@ -116,5 +104,8 @@
 	.video-iframe iframe {
 		width: 100%;
 		height: 100%;
+	}
+	.play-answer-button {
+		border-radius: 0 !important;
 	}
 </style>

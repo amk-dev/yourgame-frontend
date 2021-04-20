@@ -301,6 +301,61 @@ router.beforeEach(async (to, from, next) => {
 		}
 	}
 
+	if (to.name == 'Contest') {
+		let contestId = to.params.contestId
+		await store.dispatch('watchContestStatus', contestId)
+
+		let getContest = store.dispatch('getSingleContest', contestId)
+		let getLeaderboard = store.dispatch('getContestLeaderboard', contestId)
+
+		await Promise.all([getContest, getLeaderboard]).then(
+			([contest, leaderboard]) => {
+				if (contest.status != 'upcoming' && contest.status != 'ended') {
+					if (contest.isJoined) {
+						return next({
+							name: 'Play',
+							params: {
+								contestId: contestId,
+							},
+						})
+					} else if (!contest.isCreator) {
+						window.location = `https://youtu.be/${contest.youtubeVideoId}`
+						return
+					}
+				}
+
+				to.params.contest = contest
+				to.params.leaderboard = leaderboard
+				return next()
+			}
+		)
+	}
+
+	if (to.name == 'Play') {
+		try {
+			const contestId = to.params.contestId
+			await store.dispatch('watchContestStatus', contestId)
+			let contest = await store.dispatch('getSingleContest', contestId)
+
+			if (contest.status == 'upcoming' || contest.status == 'ended') {
+				return next({
+					name: 'Contest',
+					params: {
+						contestId: contestId,
+					},
+				})
+			} else if (!contest.isJoined) {
+				window.location = `https://youtu.be/${contest.youtubeVideoId}`
+				return
+			}
+
+			return next()
+		} catch (error) {
+			captureException(error)
+			next('/something-went-wrong')
+		}
+	}
+
 	return next()
 })
 

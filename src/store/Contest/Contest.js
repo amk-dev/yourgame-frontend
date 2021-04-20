@@ -6,9 +6,12 @@ import {
 	getContestById,
 	joinContest,
 	getLeaderboard,
+	streamContestStatus,
 } from '../../services/YourGameApi.js'
 import { getIdToken } from '../../services/FirebaseAuth.js'
 import { captureException } from '@sentry/browser'
+
+import router from '../../router.js'
 
 const state = {
 	// loading booleans
@@ -32,6 +35,7 @@ const state = {
 	activeContest: null,
 	activeContestError: false,
 	leaderboard: [],
+	contestStatusEventSource: null,
 }
 export const getters = {
 	// getters for loading booleans
@@ -72,6 +76,9 @@ export const getters = {
 			return `https://www.youtube.com/embed/${state.activeContest.youtubeVideoId}?autoplay=0&modestbranding=1&controls=0&rel=0`
 		}
 		return false
+	},
+	contestStatusEventSource(state) {
+		return state.contestStatusEventSource
 	},
 }
 export const mutations = {
@@ -130,6 +137,9 @@ export const mutations = {
 			...state.activeContest,
 			isJoined: true,
 		}
+	},
+	SET_CONTEST_STATUS_EVENT_SOURCE(state, contestStatusEventSource) {
+		state.contestStatusEventSource = contestStatusEventSource
 	},
 }
 export const actions = {
@@ -308,6 +318,44 @@ export const actions = {
 
 			captureException(error)
 		}
+	},
+	watchContestStatus({ commit, getters }, contestId) {
+		try {
+			if (!getters.contestStatusEventSource) {
+				let contestStatusEventSource = streamContestStatus(contestId)
+
+				contestStatusEventSource.onmessage = function ({ data }) {
+					data = JSON.parse(data)
+
+					if (data.status == 'video-live') {
+						router.push({
+							name: 'Play',
+							params: {
+								contestId: contestId,
+							},
+						})
+					} else if (data.status == 'end') {
+						router.push({
+							name: 'Contest',
+							params: {
+								contestId: contestId,
+							},
+						})
+					}
+				}
+
+				commit(
+					'SET_CONTEST_STATUS_EVENT_SOURCE',
+					contestStatusEventSource
+				)
+			}
+		} catch (error) {
+			captureException(error)
+		}
+	},
+	async closeContestStream({ commit }) {
+		this.contestStatusEventSource.close()
+		commit('SET_CONTEST_STATUS_EVENT_SOURCE', null)
 	},
 }
 
