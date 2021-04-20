@@ -6,6 +6,7 @@
 					class="is-rounded"
 					:src="profilePicture"
 					:alt="`${name} profile image`"
+					referrerpolicy="no-referrer"
 				/>
 			</figure>
 			<h3 class="name">{{ name }}</h3>

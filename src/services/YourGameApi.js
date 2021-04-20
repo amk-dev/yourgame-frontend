@@ -79,6 +79,20 @@ export async function startContest(firebaseIdToken, contestId) {
 	)
 }
 
+export async function updateStatusToVideoLive(firebaseIdToken, contestId) {
+	return api.post(
+		`/contest/${contestId}/startvideo`,
+		{
+			contestId: contestId,
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${firebaseIdToken}`,
+			},
+		}
+	)
+}
+
 export async function closeCurrentQuestion(firebaseIdToken, contestId) {
 	return api.post(
 		`/contest/${contestId}/closeCurrentQuestion`,
@@ -193,4 +207,12 @@ export async function getTotalReferralAmount(firebaseIdToken) {
 			Authorization: `Bearer ${firebaseIdToken}`,
 		},
 	})
+}
+
+export function streamContestStatus(contestId) {
+	let contestStatusEventSource = new EventSource(
+		`${baseURL}contest/${contestId}/streams/status`
+	)
+
+	return contestStatusEventSource
 }

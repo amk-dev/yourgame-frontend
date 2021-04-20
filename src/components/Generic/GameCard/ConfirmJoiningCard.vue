@@ -84,6 +84,7 @@
 				} else if (this.confirmButtonText != 'Ok') {
 					this.$store.dispatch('joinContestWithId', this.contestId)
 				} else {
+					this.$router.go(0)
 					this.hideConfirmJoiningCard()
 				}
 			},

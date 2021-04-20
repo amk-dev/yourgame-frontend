@@ -5,6 +5,7 @@ import {
 	endContest,
 	getNextQuestion,
 	startContest,
+	updateStatusToVideoLive,
 } from '../../services/YourGameApi.js'
 
 export default {
@@ -25,6 +26,7 @@ export default {
 		isGettingNextQuestion: false,
 		isEndingContest: false,
 		isEndingContestFeedback: null,
+		isUpdatingStatusFeedback: null,
 	},
 	getters: {
 		isEndingContest(state) {
@@ -120,8 +122,35 @@ export default {
 		SET_IS_ENDING_CONTEST_FEEDBACK(state, isEndingContestFeedback) {
 			state.isEndingContestFeedback = isEndingContestFeedback
 		},
+		SET_IS_UPDATING_STATUS(state, isUpdatingStatus) {
+			state.isUpdatingStatus = isUpdatingStatus
+		},
+		SET_IS_UPDATING_STATUS_FEEDBACK(state, isUpdatingStatusFeedback) {
+			state.isUpdatingStatusFeedback = isUpdatingStatusFeedback
+		},
 	},
 	actions: {
+		async updateStatusToVideoLive({ commit }, contestId) {
+			try {
+				commit('SET_IS_UPDATING_STATUS', true)
+
+				const idToken = await getIdToken()
+				let result = await updateStatusToVideoLive(idToken, contestId)
+
+				commit('SET_IS_UPDATING_STATUS', false)
+
+				return result.data
+			} catch (error) {
+				commit('SET_IS_UPDATING_STATUS_FEEDBACK', {
+					type: 'error',
+					message: 'Something Went Wrong',
+				})
+
+				commit('SET_IS_UPDATING_STATUS', false)
+
+				captureException(error)
+			}
+		},
 		async startContest({ commit, dispatch }, contestId) {
 			try {
 				commit('SET_IS_STARTING_CONTEST', true)

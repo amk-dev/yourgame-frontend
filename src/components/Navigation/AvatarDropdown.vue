@@ -7,6 +7,7 @@
 						class="is-rounded"
 						:src="profilePicture"
 						alt="Profile Picture"
+						referrerpolicy="no-referrer"
 					/>
 				</figure>
 				<span class="name">

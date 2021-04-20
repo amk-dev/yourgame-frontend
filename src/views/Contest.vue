@@ -4,9 +4,9 @@
 			<div class="column is-10-fullhd is-10-widescreen">
 				<div class="contest-wrapper mt-5 mb-4">
 					<game-card
-						v-if="activeContest"
+						v-if="contest"
 						type="contest-header"
-						:contest="activeContest"
+						:contest="contest"
 					></game-card>
 				</div>
 			</div>
@@ -15,39 +15,20 @@
 		<div class="columns is-gapless is-centered is-marginless">
 			<div class="column is-10-fullhd is-10-widescreen">
 				<success-message
-					v-if="
-						activeContest.isJoined &&
-						activeContest.status == 'upcoming'
-					"
+					v-if="contest.isJoined && contest.status == 'upcoming'"
 					type="success"
-					button-title="Go To Playground"
-					:button-link="`/contest/${$route.params.contestId}/play`"
 				>
-					You have successfully joined the contest. Visit Contest
-					Playground At
+					You have successfully joined the contest. Come back at
 					<strong>{{ contestTime }}</strong> on
-					<strong>{{ contestDate }}</strong> to play.
+					<strong>{{ contestDate }}</strong> to play. This page will
+					refresh when the contest begins
 				</success-message>
 
 				<success-message
-					v-if="
-						activeContest.isJoined && activeContest.status == 'live'
-					"
-					type="success"
-					button-title="Go To Playground"
-					:button-link="`/contest/${$route.params.contestId}/play`"
-				>
-					The Contest Is Live. Go to the Playground to play.
-				</success-message>
-
-				<success-message
-					v-if="
-						activeContest.status == 'live' &&
-						!activeContest.isJoined
-					"
+					v-if="contest.status == 'live' && !contest.isJoined"
 					type="info"
 					buttonTitle="Watch"
-					:buttonLink="`https://youtu.be/${activeContest.youtubeVideoId}`"
+					:buttonLink="`https://youtu.be/${contest.youtubeVideoId}`"
 				>
 					The Contest Is Live Now. You haven't joined the contest. but
 					you can watch the live show on Youtube
@@ -85,8 +66,6 @@
 	import Leaderboard from '../components/Contests/LeaderBoard.vue'
 	import SuccessMessage from '../components/Contests/SuccessMessage.vue'
 
-	import store from '../store/index.js'
-	import { mapGetters } from 'vuex'
 	import Skelton from '../components/Skelton.vue'
 
 	export default {
@@ -98,16 +77,10 @@
 			SuccessMessage,
 			Skelton,
 		},
-		beforeRouteEnter(to, from, next) {
-			getContestDetails(to, next)
-		},
-		beforeRouteUpdate(to, from, next) {
-			getContestDetails(to, next)
-		},
+		props: ['contest', 'leaderboard'],
 		computed: {
-			...mapGetters(['activeContest', 'leaderboard']),
 			contestTime() {
-				let date = new Date(this.activeContest.startTime)
+				let date = new Date(this.contest.startTime)
 				let hours = date.getHours()
 				let minutes = date.getMinutes()
 
@@ -133,7 +106,7 @@
 				return hourString
 			},
 			contestDate() {
-				let date = new Date(this.activeContest.startTime)
+				let date = new Date(this.contest.startTime)
 
 				let day = date.getDate()
 				let month = date.getMonth()
@@ -150,17 +123,6 @@
 				return `${day}-${month}-${year}`
 			},
 		},
-	}
-
-	function getContestDetails(to, next) {
-		let contestId = to.params.contestId
-
-		let singleContest = store.dispatch('getSingleContest', contestId)
-		let leaderboard = store.dispatch('getContestLeaderboard', contestId)
-
-		Promise.all([singleContest, leaderboard]).then(() => {
-			next()
-		})
 	}
 </script>
 ,

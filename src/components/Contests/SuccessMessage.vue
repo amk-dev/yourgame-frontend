@@ -11,21 +11,23 @@
 			<slot></slot>
 		</div>
 
-		<router-link v-if="!isExternal" :to="buttonLink">
-			<div class="playground-button">
-				<primary-button class="is-fullwidth">{{
-					buttonTitle
-				}}</primary-button>
-			</div>
-		</router-link>
+		<template v-if="buttonTitle && buttonLink">
+			<router-link v-if="!isExternal" :to="buttonLink">
+				<div class="playground-button">
+					<primary-button class="is-fullwidth">{{
+						buttonTitle
+					}}</primary-button>
+				</div>
+			</router-link>
 
-		<a v-if="isExternal" :href="buttonLink">
-			<div class="playground-button">
-				<primary-button class="is-fullwidth">{{
-					buttonTitle
-				}}</primary-button>
-			</div>
-		</a>
+			<a v-if="isExternal" :href="buttonLink">
+				<div class="playground-button">
+					<primary-button class="is-fullwidth">{{
+						buttonTitle
+					}}</primary-button>
+				</div>
+			</a>
+		</template>
 	</div>
 </template>
 
