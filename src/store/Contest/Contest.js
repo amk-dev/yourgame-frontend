@@ -334,7 +334,7 @@ export const actions = {
 								contestId: contestId,
 							},
 						})
-					} else if (data.status == 'end') {
+					} else if (data.status == 'ended') {
 						router.push({
 							name: 'Contest',
 							params: {
