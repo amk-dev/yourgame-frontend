@@ -253,7 +253,11 @@
 				'isEndingContestFeedback',
 				'isEndingContest',
 				'isUpdatingStatus',
+				'isUpdatingStatusFeedback',
 			]),
+		},
+		mounted() {
+			fetch('/img/fontawesome/solid.svg')
 		},
 	}
 </script>
