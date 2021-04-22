@@ -27,6 +27,7 @@ export default {
 		isEndingContest: false,
 		isEndingContestFeedback: null,
 		isUpdatingStatusFeedback: null,
+		isUpdatingStatus: false,
 	},
 	getters: {
 		isEndingContest(state) {
@@ -149,6 +150,8 @@ export default {
 				commit('SET_IS_UPDATING_STATUS', false)
 
 				captureException(error)
+
+				throw error
 			}
 		},
 		async startContest({ commit, dispatch }, contestId) {

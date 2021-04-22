@@ -146,6 +146,16 @@
 									: 'Next Question'
 							}}</primary-button
 						>
+
+						<primary-button
+							v-if="isGoLiveButtonVisible"
+							:disabled="isUpdatingStatus"
+							@click.native="updateStatusToVideoLive"
+							class="is-block"
+						>
+							Go Live
+						</primary-button>
+
 						<primary-button
 							class="is-block"
 							v-if="isQuestionsOver && isRemainingTimeZero"
@@ -153,11 +163,15 @@
 							:disabled="isEndingContest"
 							>End Game</primary-button
 						>
-
 						<feedback-box
 							class="mt-4"
 							v-if="isEndingContestFeedback"
 							:feedback="isEndingContestFeedback"
+						></feedback-box>
+						<feedback-box
+							class="mt-4"
+							v-if="isUpdatingStatusFeedback"
+							:feedback="isUpdatingStatusFeedback"
 						></feedback-box>
 					</div>
 				</div>
@@ -189,6 +203,7 @@
 					'box-shadow': '4px 4px 12px rgba(0, 0, 0, 0.1)',
 					'margin-top': '56px',
 				},
+				isGoLiveButtonVisible: true,
 			}
 		},
 		methods: {
@@ -197,6 +212,17 @@
 					'startContest',
 					this.$route.params.contestId
 				)
+			},
+			updateStatusToVideoLive() {
+				this.$store
+					.dispatch(
+						'updateStatusToVideoLive',
+						this.$route.params.contestId
+					)
+					.then(() => {
+						this.isGoLiveButtonVisible = false
+					})
+					.catch(() => {})
 			},
 			getNextQuestion() {
 				if (this.isRemainingTimeZero) {
@@ -226,6 +252,7 @@
 				'isQuestionsOver',
 				'isEndingContestFeedback',
 				'isEndingContest',
+				'isUpdatingStatus',
 			]),
 		},
 	}
