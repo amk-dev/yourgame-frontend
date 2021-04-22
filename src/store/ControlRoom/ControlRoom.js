@@ -78,6 +78,12 @@ export default {
 
 			return false
 		},
+		isUpdatingStatus(state) {
+			return state.isUpdatingStatus
+		},
+		isUpdatingStatusFeedback(state) {
+			return state.isUpdatingStatusFeedback
+		},
 	},
 	mutations: {
 		SET_IS_STARTING_CONTEST(state, isStartingContest) {
