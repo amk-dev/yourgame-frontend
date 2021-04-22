@@ -211,7 +211,7 @@ export async function getTotalReferralAmount(firebaseIdToken) {
 
 export function streamContestStatus(contestId) {
 	let contestStatusEventSource = new EventSource(
-		`${baseURL}contest/${contestId}/streams/status`
+		`${baseURL}/contest/${contestId}/streams/status`
 	)
 
 	return contestStatusEventSource
