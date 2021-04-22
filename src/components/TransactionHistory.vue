@@ -3,6 +3,7 @@
 		<h2 class="transaction-history-title mb-4">Transaction History</h2>
 		<ul>
 			<transaction
+				class="mt-2"
 				v-for="transaction in transactions"
 				:transaction="transaction"
 				:key="transaction._id"

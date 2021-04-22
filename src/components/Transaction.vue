@@ -21,6 +21,8 @@
 			transactionDescription() {
 				let events = {
 					referral: 'Referral Bonus',
+					'joined-contest': 'Joined A Contest',
+					winning: 'Won from a contest',
 				}
 
 				return events[this.transaction.event]
