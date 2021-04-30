@@ -1,0 +1,23 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "23:30"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: eslint-plugin-vue
+    versions:
+    - 6.2.2
+  - dependency-name: husky
+    versions:
+    - 6.0.0
+  - dependency-name: firebase
+    versions:
+    - 8.3.2
+    - 8.3.3
+    - 8.4.0
+  - dependency-name: sass-loader
+    versions:
+    - 11.0.1
